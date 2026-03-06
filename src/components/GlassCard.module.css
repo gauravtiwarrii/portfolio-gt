@@ -1,0 +1,16 @@
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 24px;
+    color: white;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    border-color: rgba(0, 123, 255, 0.3);
+}

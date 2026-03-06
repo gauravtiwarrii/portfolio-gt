@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #121212;
+  --foreground: #ffffff;
+  --color-accent: #007BFF;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 20px;
+  --font-inter: var(--font-inter);
+  --font-outfit: var(--font-outfit);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: #020617;
+  /* Very deep, dark blue/slate for premium tech feel */
+  min-height: 100vh;
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-outfit);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Cyberpunk section divider */
+  .section-divider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 24px;
+    overflow: visible;
+    margin: 0 auto;
+    max-width: 72rem;
+    padding: 0 1.5rem;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.08));
+  }
+
+  .section-divider::after {
+    background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.08));
+  }
+
+  .section-divider-icon {
+    width: 8px;
+    height: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+    margin: 0 12px;
+    background: rgba(99, 102, 241, 0.2);
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.3);
+  }
+}
+
+/* Glitch animation */
+@keyframes glitch-clip-1 {
+
+  0%,
+  100% {
+    clip-path: inset(0 0 95% 0);
+    transform: translate(-2px, 0);
+  }
+
+  50% {
+    clip-path: inset(30% 0 50% 0);
+    transform: translate(2px, -1px);
+  }
+}
+
+@keyframes glitch-clip-2 {
+
+  0%,
+  100% {
+    clip-path: inset(80% 0 0 0);
+    transform: translate(2px, 0);
+  }
+
+  50% {
+    clip-path: inset(60% 0 20% 0);
+    transform: translate(-2px, 1px);
+  }
+}

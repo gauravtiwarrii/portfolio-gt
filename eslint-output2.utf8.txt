@@ -1,0 +1,100 @@
+﻿
+D:\pORTFOLIO GT\src\app\about\page.tsx
+  6:8  warning  'GlassCard' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\pORTFOLIO GT\src\app\actions\sendEmail.ts
+  37:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\pORTFOLIO GT\src\app\api\admin\login\route.ts
+  2:10  warning  'cookies' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\pORTFOLIO GT\src\app\api\admin\posts\route.ts
+   79:22  warning  'e' is defined but never used             @typescript-eslint/no-unused-vars
+   92:18  warning  'e' is defined but never used             @typescript-eslint/no-unused-vars
+  100:18  warning  'e' is defined but never used             @typescript-eslint/no-unused-vars
+  120:19  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pORTFOLIO GT\src\app\api\og\route.tsx
+  152:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pORTFOLIO GT\src\app\blog\BlogClient.tsx
+  142:83  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  142:97  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+D:\pORTFOLIO GT\src\app\contact\page.tsx
+  19:18  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\pORTFOLIO GT\src\app\projects\page.tsx
+  6:10  warning  'ExternalLink' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\pORTFOLIO GT\src\app\terminal\page.tsx
+  122:70  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  122:74  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\pORTFOLIO GT\src\components\ChatWidget.tsx
+  39:44  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  39:53  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\pORTFOLIO GT\src\components\ContactSection.tsx
+  55:28  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  80:92  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\pORTFOLIO GT\src\components\DataFlowVisualizer.tsx
+  20:112  error  Comments inside children section of tag should be placed inside braces  react/jsx-no-comment-textnodes
+
+D:\pORTFOLIO GT\src\components\GitHubSection.tsx
+  30:82  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\pORTFOLIO GT\src\components\GithubStats.tsx
+   4:25  warning  'Github' is defined but never used  @typescript-eslint/no-unused-vars
+  39:22  warning  'err' is defined but never used     @typescript-eslint/no-unused-vars
+
+D:\pORTFOLIO GT\src\components\Scene3D.tsx
+  3:18  warning  'useFrame' is defined but never used     @typescript-eslint/no-unused-vars
+  4:10  warning  'useRef' is defined but never used       @typescript-eslint/no-unused-vars
+  4:18  warning  'useMemo' is defined but never used      @typescript-eslint/no-unused-vars
+  5:13  warning  'THREE' is defined but never used        @typescript-eslint/no-unused-vars
+  6:10  warning  'Environment' is defined but never used  @typescript-eslint/no-unused-vars
+  6:23  warning  'Float' is defined but never used        @typescript-eslint/no-unused-vars
+
+D:\pORTFOLIO GT\src\components\SkillsCategory.tsx
+  64:74  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  85:65  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\pORTFOLIO GT\src\components\StatsSection.tsx
+  3:29  warning  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\pORTFOLIO GT\src\components\TypewriterRole.tsx
+  31:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\pORTFOLIO GT\src\components\TypewriterRole.tsx:31:13
+  29 |         }
+  30 |         if (subIndex === 0 && deleting) {
+> 31 |             setDeleting(false);
+     |             ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  32 |             setIndex(i => (i + 1) % words.length);
+  33 |             return;
+  34 |         }  react-hooks/set-state-in-effect
+
+D:\pORTFOLIO GT\src\data\projects.ts
+   2:20  warning  'Plane' is defined but never used            @typescript-eslint/no-unused-vars
+   2:27  warning  'Terminal' is defined but never used         @typescript-eslint/no-unused-vars
+   2:37  warning  'LayoutDashboard' is defined but never used  @typescript-eslint/no-unused-vars
+   2:54  warning  'ShieldCheck' is defined but never used      @typescript-eslint/no-unused-vars
+  10:11  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+D:\pORTFOLIO GT\src\lib\blog.ts
+  61:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\pORTFOLIO GT\test-post.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+Ô£û 40 problems (18 errors, 22 warnings)
+

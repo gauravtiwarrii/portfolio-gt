@@ -1,0 +1,152 @@
+.markdown {
+    color: #e4e4e7;
+    line-height: 1.8;
+    font-size: 1.125rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+    color: #ffffff;
+    font-weight: 800;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+}
+
+.markdown h1 {
+    font-size: 2.75rem;
+}
+
+.markdown h2 {
+    font-size: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1rem;
+    position: relative;
+}
+
+.markdown h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 60px;
+    height: 1px;
+    background: #818cf8;
+    /* indigo-400 */
+    box-shadow: 0 0 10px #818cf8;
+}
+
+.markdown h3 {
+    font-size: 1.5rem;
+    color: #f4f4f5;
+}
+
+.markdown p {
+    margin-bottom: 1.75rem;
+}
+
+.markdown ul,
+.markdown ol {
+    margin-bottom: 1.75rem;
+    padding-left: 1.75rem;
+}
+
+.markdown li {
+    margin-bottom: 0.75rem;
+}
+
+.markdown ul li {
+    list-style-type: none;
+    position: relative;
+}
+
+.markdown ul li::before {
+    content: '';
+    position: absolute;
+    left: -1.25rem;
+    top: 0.6rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #818cf8;
+    box-shadow: 0 0 8px rgba(129, 140, 248, 0.6);
+}
+
+.markdown a {
+    color: #818cf8;
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(129, 140, 248, 0.4);
+    transition: all 0.3s ease;
+    padding-bottom: 2px;
+}
+
+.markdown a:hover {
+    color: #a5b4fc;
+    border-bottom: 1px solid #a5b4fc;
+    text-shadow: 0 0 8px rgba(165, 180, 252, 0.4);
+}
+
+.markdown blockquote {
+    background: linear-gradient(90deg, rgba(79, 70, 229, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 4px solid #818cf8;
+    padding: 1.5rem 2rem;
+    border-radius: 0 1rem 1rem 0;
+    margin: 2.5rem 0;
+    font-style: italic;
+    color: #d4d4d8;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.markdown code {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.5rem;
+    font-family: var(--font-inter), monospace;
+    font-size: 0.85em;
+    color: #f4f4f5;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.markdown pre {
+    background: #09090b;
+    padding: 1.75rem;
+    border-radius: 1.5rem;
+    overflow-x: auto;
+    margin: 2.5rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.5), 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.markdown pre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.markdown pre code {
+    background: transparent;
+    padding: 0;
+    color: #e4e4e7;
+    font-size: 0.9em;
+    border: none;
+    line-height: 1.6;
+}
+
+.markdown img {
+    border-radius: 1.5rem;
+    margin: 3rem auto;
+    max-width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
