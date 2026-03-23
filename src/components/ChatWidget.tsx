@@ -36,7 +36,7 @@ export default function ChatWidget() {
                         </div>
                         <div className={styles.body}>
                             <div className={styles.message}>
-                                <p>Hello! I'm Gaurav's AI assistant. Ask me about his projects or skills!</p>
+                                <p>Hello! I&apos;m Gaurav&apos;s AI assistant. Ask me about his projects or skills!</p>
                             </div>
                         </div>
                         <div className={styles.inputArea}>

@@ -9,7 +9,8 @@ import * as THREE from "three";
 // ─── Floating particle constellation ─────────────────────────────────────────
 function Particles() {
     const ref = useRef<THREE.Points>(null);
-    const count = 1800;
+    // Reduce particle count on narrow screens for performance
+    const count = typeof window !== "undefined" && window.innerWidth < 768 ? 600 : 1800;
 
     const { positions, velocities } = useMemo(() => {
         const positions = new Float32Array(count * 3);
@@ -24,7 +25,7 @@ function Particles() {
             velocities[i3 + 2] = 0;
         }
         return { positions, velocities };
-    }, []);
+    }, [count]);
 
     const { pointer } = useThree();
 

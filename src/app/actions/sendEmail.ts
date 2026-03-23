@@ -24,7 +24,7 @@ export async function sendEmailAction(formData: FormData) {
     try {
         const data = await resend.emails.send({
             from: "Portfolio Contact Form <onboarding@resend.dev>", // default testing email for Resend
-            to: ["your-email@example.com"], // We can replace this later or use env variable
+            to: ["igauravtiwari1096@gmail.com"],
             subject: `New Contact Request from ${name}`,
             text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
         });
@@ -34,7 +34,7 @@ export async function sendEmailAction(formData: FormData) {
         }
 
         return { success: true, message: "Message sent successfully!" };
-    } catch (error) {
+    } catch {
         return { error: "An unexpected error occurred." };
     }
 }

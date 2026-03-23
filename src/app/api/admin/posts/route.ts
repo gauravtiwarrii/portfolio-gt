@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
                 if (!isNaN(parsed.getTime())) {
                     postDate = parsed.toISOString().split("T")[0];
                 }
-            } catch (e) {
+            } catch {
                 // fallback to today safely
             }
         }
@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
             } else if (Array.isArray(tags)) {
                 tagsArray = tags.filter(Boolean).map(String);
             }
-        } catch (e) {
+        } catch {
             // fallback to empty array
         }
 

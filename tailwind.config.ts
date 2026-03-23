@@ -17,7 +17,7 @@ const config: Config = {
             fontFamily: {
                 sans: ["var(--font-inter)", "sans-serif"],
                 heading: ["var(--font-outfit)", "sans-serif"],
-                mono: ["Courier New", "monospace"],
+                mono: ["var(--font-jetbrains-mono)", "Courier New", "monospace"],
             },
         },
     },

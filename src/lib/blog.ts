@@ -58,7 +58,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
             coverImage: data.coverImage,
             content,
         };
-    } catch (error) {
+    } catch {
         return null;
     }
 }

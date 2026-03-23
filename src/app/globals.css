@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #121212;
+  --background: #000000;
   --foreground: #ffffff;
-  --color-accent: #007BFF;
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-blur: 20px;
+  --color-accent: #a855f7;
+  --color-yellow: #facc15;
+  --color-turquoise: #2dd4bf;
+  --color-green: #4ade80;
   --font-inter: var(--font-inter);
   --font-outfit: var(--font-outfit);
 }
@@ -27,12 +27,20 @@ body {
 
 body {
   color: var(--foreground);
-  background: #020617;
-  /* Very deep, dark blue/slate for premium tech feel */
+  background: #000000;
   min-height: 100vh;
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Restore normal system cursor on touch devices */
+@media (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
 }
 
 a {
@@ -49,73 +57,102 @@ h6 {
   font-family: var(--font-outfit);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Selection */
+::selection {
+  background: rgba(168, 85, 247, 0.3);
+  color: white;
+}
 
-  /* Cyberpunk section divider */
-  .section-divider {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0;
-    height: 24px;
-    overflow: visible;
-    margin: 0 auto;
-    max-width: 72rem;
-    padding: 0 1.5rem;
-  }
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
 
-  .section-divider::before,
-  .section-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.08));
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-
-  .section-divider::after {
-    background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.08));
-  }
-
-  .section-divider-icon {
-    width: 8px;
-    height: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    transform: rotate(45deg);
-    flex-shrink: 0;
-    margin: 0 12px;
-    background: rgba(99, 102, 241, 0.2);
-    box-shadow: 0 0 8px rgba(99, 102, 241, 0.3);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Glitch animation */
-@keyframes glitch-clip-1 {
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 
-  0%,
-  100% {
-    clip-path: inset(0 0 95% 0);
-    transform: translate(-2px, 0);
+/* Scroll-triggered reveal animation */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
   }
-
-  50% {
-    clip-path: inset(30% 0 50% 0);
-    transform: translate(2px, -1px);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@keyframes glitch-clip-2 {
+.reveal-on-scroll {
+  animation: reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
 
-  0%,
-  100% {
-    clip-path: inset(80% 0 0 0);
-    transform: translate(2px, 0);
-  }
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
 
-  50% {
-    clip-path: inset(60% 0 20% 0);
-    transform: translate(-2px, 1px);
-  }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Phase 2: Techy Aesthetics */
+.neon-text {
+  text-shadow: 0 0 10px rgba(45, 212, 191, 0.5), 0 0 20px rgba(45, 212, 191, 0.3);
+}
+
+.glitch-hover {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.glitch-hover:hover {
+  color: #fff;
+  text-shadow: 
+    2px 0 0 rgba(255,0,0,0.5), 
+    -2px 0 0 rgba(0,255,255,0.5);
+  transform: translateX(1px);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+.bg-tech-grid {
+  background-size: 30px 30px;
+  background-image: 
+    linear-gradient(to right, rgba(45, 212, 191, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(45, 212, 191, 0.05) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
 }

@@ -5,8 +5,8 @@ import path from "path";
 
 const postsDirectory = path.join(process.cwd(), "content/blogs");
 
-function isAuthenticated(): boolean {
-    const cookieStore = cookies();
+async function isAuthenticated(): Promise<boolean> {
+    const cookieStore = await cookies();
     return cookieStore.get("admin_session")?.value === "1";
 }
 
@@ -16,12 +16,13 @@ function estimateReadTime(content: string): string {
     return `${minutes} min read`;
 }
 
-export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
-    if (!isAuthenticated()) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
+    if (!(await isAuthenticated())) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const filePath = path.join(postsDirectory, `${params.slug}.md`);
+    const slug = (await params).slug;
+    const filePath = path.join(postsDirectory, `${slug}.md`);
     if (!fs.existsSync(filePath)) {
         return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
@@ -30,11 +31,12 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
     return NextResponse.json({ raw });
 }
 
-export async function PUT(req: NextRequest, { params }: { params: { slug: string } }) {
-    if (!isAuthenticated()) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
+    if (!(await isAuthenticated())) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const slug = (await params).slug;
     const body = await req.json();
     const { title, excerpt, tags, content, date } = body;
     const postDate = date || new Date().toISOString().split("T")[0];
@@ -53,18 +55,19 @@ tags: [${tagsArray.map((t: string) => `"${t}"`).join(", ")}]
 
 ${content}`;
 
-    const filePath = path.join(postsDirectory, `${params.slug}.md`);
+    const filePath = path.join(postsDirectory, `${slug}.md`);
     fs.writeFileSync(filePath, frontmatter, "utf8");
 
     return NextResponse.json({ success: true });
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { slug: string } }) {
-    if (!isAuthenticated()) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
+    if (!(await isAuthenticated())) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const filePath = path.join(postsDirectory, `${params.slug}.md`);
+    const slug = (await params).slug;
+    const filePath = path.join(postsDirectory, `${slug}.md`);
     if (!fs.existsSync(filePath)) {
         return NextResponse.json({ error: "Not found" }, { status: 404 });
     }

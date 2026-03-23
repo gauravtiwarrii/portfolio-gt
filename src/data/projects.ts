@@ -42,6 +42,211 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+        slug: "real-time-retail-data-pipeline",
+        title: "Real-Time Retail Data Pipeline",
+        subtitle: "Kafka + Spark Streaming + AWS Redshift",
+        description: "Built a real-time data ingestion pipeline using Apache Kafka and Spark Streaming to process live retail sales transactions, with automated orchestration via Apache Airflow.",
+        tags: ["Python", "Apache Kafka", "Spark Streaming", "AWS S3", "Redshift", "Airflow"],
+        icon: Cloud,
+        github: "https://github.com/gauravtiwarrii/Real-Time-Retail-Data-Pipeline",
+        featured: true,
+        category: "Streaming",
+        status: "Live",
+        healthStatus: { status: "Online", lastPing: "Streaming events..." },
+        problem: "Retail businesses needed live transaction monitoring and real-time analytics but were stuck with batch reports that caused a 24-hour insight delay.",
+        codeSnippet: {
+            language: "python",
+            fileName: "kafka_retail_consumer.py",
+            description: "Spark Structured Streaming consumer reading from Kafka retail topic.",
+            code: `stream_df = spark.readStream \\
+    .format("kafka") \\
+    .option("kafka.bootstrap.servers", "broker:9092") \\
+    .option("subscribe", "retail-transactions") \\
+    .load()
+
+# ETL transformations on the stream
+cleaned = stream_df.select(
+    from_json(col("value").cast("string"), schema).alias("data")
+).select("data.*") \\
+ .filter(col("amount") > 0) \\
+ .withColumn("ts", to_timestamp("event_time"))
+
+# Write to Redshift
+cleaned.writeStream \\
+    .format("jdbc") \\
+    .option("url", REDSHIFT_URL) \\
+    .option("dbtable", "retail_facts") \\
+    .start()`,
+        },
+        details: {
+            challenge: "Processing high-velocity retail transactions in real time while ensuring exactly-once delivery semantics and low latency analytics.",
+            solution: "Deployed Apache Kafka as a high-throughput message broker, Spark Streaming for micro-batch ETL, and AWS Redshift as the analytical store. Apache Airflow orchestrates the pipeline health and monitors SLAs.",
+            architecture: {
+                description: "Retail POS → Kafka Topics → Spark Streaming ETL → AWS S3 (raw) → Redshift (analytics) → Airflow Orchestration",
+            },
+            techStackJustification: [
+                { tech: "Apache Kafka", reason: "High-throughput, low-latency event streaming with durable message retention." },
+                { tech: "Spark Streaming", reason: "Micro-batch processing with exactly-once semantics and fault tolerance." },
+                { tech: "AWS Redshift", reason: "Columnar MPP warehouse optimised for analytical queries at scale." },
+                { tech: "Apache Airflow", reason: "DAG-based orchestration with built-in retry logic and SLA monitoring." },
+            ],
+            performance: [
+                "Automated pipeline orchestration, reducing manual data processing by 80%.",
+                "Low-latency streaming with sub-5s analytics latency.",
+                "Scalable consumer groups to handle traffic spikes.",
+            ],
+            engineeringPractices: [
+                "Fault-tolerant stream checkpointing.",
+                "ETL validation rules to reject malformed records.",
+                "Automated Airflow alerting on pipeline failure.",
+            ],
+            features: [
+                "Real-time Kafka ingestion of retail transactions.",
+                "Spark Streaming ETL with cleaning & aggregation.",
+                "AWS Redshift analytical store.",
+                "Airflow-orchestrated pipeline automation.",
+            ],
+        },
+    },
+    {
+        slug: "flight-analytics-data-warehouse",
+        title: "End-to-End Data Warehouse for Flight Analytics",
+        subtitle: "Snowflake + dbt + Airflow + Tableau",
+        description: "Designed and implemented a Snowflake-based data warehouse integrating flight operations and passenger datasets, with dbt-powered ETL and a Star Schema for efficient OLAP queries.",
+        tags: ["Python", "SQL", "Snowflake", "dbt", "Airflow", "Tableau"],
+        icon: Database,
+        github: "https://github.com/gauravtiwarrii/End-to-End-Data-Warehouse-for-Flight-Analytics",
+        featured: true,
+        category: "Warehousing",
+        status: "Live",
+        healthStatus: { status: "Online", lastPing: "Models up to date" },
+        problem: "Flight operators lacked a consolidated analytical platform to combine operations data with passenger metrics, making KPI reporting slow and unreliable.",
+        codeSnippet: {
+            language: "sql",
+            fileName: "fct_flights.sql",
+            description: "dbt Fact model for flight analytics with Star Schema joins.",
+            code: `-- models/marts/fct_flights.sql
+{{ config(materialized='incremental', unique_key='flight_id') }}
+
+SELECT
+    f.flight_id,
+    f.flight_number,
+    d.date_day,
+    a.airport_name    AS origin_airport,
+    p.passenger_count,
+    f.delay_minutes,
+    f.status
+FROM {{ ref('stg_flights') }} f
+JOIN {{ ref('dim_date') }}    d ON f.departure_date = d.date_day
+JOIN {{ ref('dim_airports') }} a ON f.origin_code   = a.iata_code
+JOIN {{ ref('dim_passengers') }} p ON f.flight_id   = p.flight_id
+
+{% if is_incremental() %}
+WHERE f.updated_at > (SELECT MAX(updated_at) FROM {{ this }})
+{% endif %}`,
+        },
+        details: {
+            challenge: "Raw flight datasets were spread across multiple CSV sources with inconsistent schemas, making it impossible to run reliable cross-dataset analytical queries.",
+            solution: "Built a Snowflake data warehouse with a Kimball Star Schema. dbt transforms raw staged data into clean dimension and fact models. Airflow schedules daily refreshes and Tableau consumes the final models.",
+            architecture: {
+                description: "Raw CSVs → Python Ingestion → Snowflake Staging → dbt Transformations (Star Schema) → Tableau Dashboards → Airflow Orchestration",
+            },
+            techStackJustification: [
+                { tech: "Snowflake", reason: "Cloud-native MPP warehouse with elastic scaling and zero-copy cloning for dev/prod isolation." },
+                { tech: "dbt", reason: "Version-controlled, testable SQL transformations with lineage documentation." },
+                { tech: "Apache Airflow", reason: "Reliable DAG scheduling with dependency management and SLA tracking." },
+                { tech: "Tableau", reason: "Fast, interactive BI dashboards consuming Snowflake live queries." },
+            ],
+            performance: [
+                "Star Schema architecture enabling efficient OLAP queries.",
+                "dbt incremental models reducing full-refresh compute cost.",
+                "Tableau dashboards backed by Snowflake for sub-second query response.",
+            ],
+            engineeringPractices: [
+                "dbt tests for data quality at every model layer.",
+                "Incremental materialization to avoid full table scans.",
+                "Dimension table SCD management.",
+            ],
+            features: [
+                "Snowflake data warehouse with Star Schema design.",
+                "dbt ETL pipelines with automated testing.",
+                "Airflow-scheduled daily model refreshes.",
+                "Tableau dashboards for flight KPI reporting.",
+            ],
+        },
+    },
+    {
+        slug: "flight-delay-prediction",
+        title: "Flight Delay Prediction System",
+        subtitle: "ML Pipeline · Scikit-Learn + Flask + Streamlit",
+        description: "Built a predictive analytics system integrating flight, weather, and airport traffic datasets. Includes a full data processing pipeline, feature engineering, PostgreSQL storage, and a Streamlit dashboard.",
+        tags: ["Python", "NumPy", "Scikit-Learn", "Flask", "Streamlit", "PostgreSQL"],
+        icon: Server,
+        github: "https://github.com/gauravtiwarrii/Flight-Delay-Prediction-System",
+        featured: true,
+        category: "Analytics",
+        status: "Live",
+        healthStatus: { status: "Online", lastPing: "Model serving..." },
+        problem: "Airlines and passengers lack predictive tools to anticipate delays caused by weather or congestion, resulting in poor resource planning and traveller dissatisfaction.",
+        codeSnippet: {
+            language: "python",
+            fileName: "feature_engineering.py",
+            description: "Data cleaning and feature engineering pipeline for flight delay prediction.",
+            code: `import numpy as np
+import pandas as pd
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+def build_features(df: pd.DataFrame) -> pd.DataFrame:
+    # Merge weather & traffic datasets
+    df = df.merge(weather_df, on=["date", "origin"], how="left")
+    df = df.merge(traffic_df, on=["date", "origin"], how="left")
+
+    # Feature engineering
+    df["hour_of_day"]     = pd.to_datetime(df["departure"]).dt.hour
+    df["is_peak_season"]  = df["month"].isin([6, 7, 12]).astype(int)
+    df["wind_delay_risk"] = np.where(df["wind_speed"] > 30, 1, 0)
+
+    return df.dropna(subset=TARGET_COLS)
+
+pipeline = Pipeline([
+    ("features", build_features),
+    ("scaler",   StandardScaler()),
+])`,
+        },
+        details: {
+            challenge: "Flight, weather, and airport traffic data lived in separate datasets with mismatched schemas, making multi-source feature engineering complex.",
+            solution: "Built an end-to-end ML pipeline: raw datasets are merged and cleaned with Python/NumPy, features are engineered, stored in PostgreSQL, and used to train a Scikit-Learn classifier. Flask serves predictions as an API and Streamlit provides an interactive dashboard.",
+            architecture: {
+                description: "Raw Datasets (flights, weather, traffic) → Python ETL → PostgreSQL → Scikit-Learn Training → Flask API → Streamlit Dashboard",
+            },
+            techStackJustification: [
+                { tech: "NumPy / Pandas", reason: "Efficient vectorised data cleaning and feature transformation at scale." },
+                { tech: "Scikit-Learn", reason: "Rich ML ecosystem with preprocessing pipelines and model evaluation tools." },
+                { tech: "PostgreSQL", reason: "Reliable relational store for processed training datasets and model outputs." },
+                { tech: "Flask + Streamlit", reason: "Flask for lightweight prediction API; Streamlit for rapid interactive dashboard." },
+            ],
+            performance: [
+                "Multi-source dataset integration (flight + weather + traffic).",
+                "Extensive feature engineering improving model accuracy.",
+                "PostgreSQL-backed training data for reproducible experiments.",
+            ],
+            engineeringPractices: [
+                "Modular ETL pipeline separating ingestion, cleaning, and feature engineering.",
+                "Scikit-Learn Pipeline preventing data leakage.",
+                "Versioned model artefacts for reproducibility.",
+            ],
+            features: [
+                "Multi-dataset integration pipeline.",
+                "Feature engineering (weather, seasonality, traffic).",
+                "Scikit-Learn predictive model.",
+                "Flask REST API for predictions.",
+                "Streamlit interactive dashboard.",
+            ],
+        },
+    },
+    {
+
         slug: "retail-etl-pipeline",
         title: "End-to-End Retail ETL Pipeline",
         subtitle: "Automated Batch Processing",

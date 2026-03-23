@@ -1,0 +1,10 @@
+[
+  {
+    "id": "1774257838289",
+    "name": "Test Mail",
+    "email": "test@gmail.com",
+    "message": "thiss is test mail",
+    "receivedAt": "2026-03-23T09:23:58.289Z",
+    "read": false
+  }
+]

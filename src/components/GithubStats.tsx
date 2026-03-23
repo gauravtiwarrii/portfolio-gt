@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Star, GitFork, Github } from "lucide-react";
+import { Star, GitFork } from "lucide-react";
 
 interface GithubStatsProps {
     url: string;
@@ -36,8 +36,8 @@ export default function GithubStats({ url }: GithubStatsProps) {
                     stars: data.stargazers_count || 0,
                     forks: data.forks_count || 0,
                 });
-            } catch (err) {
-                // Silently fail for invalid repos or rate limits to avoid console spam
+            } catch {
+                // Silently fail for invalid repos or rate limits
             } finally {
                 setLoading(false);
             }

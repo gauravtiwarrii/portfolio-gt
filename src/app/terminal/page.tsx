@@ -119,7 +119,7 @@ export default function TerminalPage() {
                         <div className="space-y-2">
                             <div><Link href="/projects/data-pipeline" className="text-indigo-400 hover:text-indigo-300 hover:underline">[1] Enterprise Real-Time Data Pipeline</Link></div>
                             <div><Link href="/projects/ml-fraud" className="text-indigo-400 hover:text-indigo-300 hover:underline">[2] Financial Fraud Detection Engine</Link></div>
-                            <div className="mt-2 text-zinc-500">Type 'gui' or click links to view details.</div>
+                            <div className="mt-2 text-zinc-500">Type &apos;gui&apos; or click links to view details.</div>
                         </div>
                     )
                 });
