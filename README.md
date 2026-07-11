@@ -1,161 +1,187 @@
-# 🖥️ GT_OS v3.0 — Retro-Futuristic Developer Portfolio Operating System
+```
+  ██████╗ ████████╗     ██████╗ ███████╗
+ ██╔════╝ ╚══██╔══╝    ██╔═══██╗██╔════╝
+ ██║  ███╗   ██║       ██║   ██║███████╗
+ ██║   ██║   ██║       ██║   ██║╚════██║
+ ╚██████╔╝   ██║       ╚██████╔╝███████║
+  ╚═════╝    ╚═╝        ╚═════╝ ╚══════╝
+  =================== VERSION 3.0 ===================
+```
 
-Welcome to **GT_OS v3.0**, a highly interactive, retro-futuristic operating system simulation built as a professional developer portfolio for **Gaurav Tiwari** (Data Engineer, AI Engineer, and Backend Developer). 
+# 🖥️ GT_OS v3.0 — Cybernetic Developer Portfolio Mainframe
 
-Inspired by classic CRT terminals, cyberpunk aesthetics, and command-line interfaces, this application simulates a custom desktop workspace complete with window management, a custom CLI terminal, an inline AI chatbot, real-time GitHub integration, and multiple visual themes.
+Welcome to the terminal node of **GT_OS v3.0**, a highly interactive, retro-futuristic desktop simulation operating system. This environment serves as the secure portfolio hub of **Gaurav Tiwari**, specializing in **Data Engineering, Distributed Systems, and AI Pipeline Architectures**. 
 
----
-
-## 🚀 Live Demo & Repository
-* **GitHub Repository**: [portfolio-gt](https://github.com/gauravtiwarrii/portfolio-gt)
-* **Owner**: [Gaurav Tiwari](https://github.com/gauravtiwarrii)
-
----
-
-## ✨ Key Features
-
-### 1. 🎞️ CRT Boot Sequence & Preloader
-* A simulated operating system boot sequence initializing database engines, Apache Kafka streams, and AI pipelines.
-* Retro-styled CRT scanline filters, flickering visuals, and corner bracket guides.
-* Features keyboard interaction (`Enter`/`Escape`/`Space` to skip boot) and persistent session-storage states to prevent redundant preloads.
-
-### 2. 🪟 Custom Window Manager
-* A fully-functional simulated desktop environment with draggable, resizable, and focus-managed OS windows.
-* Controls for minimizing, maximizing, positioning, and layering windows dynamically.
-* Integrated windows for **Projects**, **Technical Skills Galaxy**, **Career Timeline**, **Certificates**, and **AI Assistant**.
-
-### 3. 🤖 AI Chat Assistant (AIAssistant)
-* A custom interactive AI chatbot window (`/api/ai`) loaded with context about Gaurav's engineering experience, skills, and background.
-* Allows recruiters and users to query credentials, projects, or schedule interviews in real time.
-
-### 4. 🐚 Interactive GT_Shell (Terminal Console)
-* A fully interactive command-line interface (`/terminal` or command palette) that parses custom CLI commands.
-* Supported commands:
-  * `help` — Show available CLI commands
-  * `about` / `whoami` — Detailed professional bio
-  * `skills` — Technical skills summary with ASCII progress bars
-  * `experience` / `education` — Career trajectory and academic history
-  * `projects` — Lists deployed services and project indexes
-  * `open [1-7]` — Show detailed engineering writeup for a project
-  * `github` — GitHub dashboard metrics
-  * `theme [name]` — Instantly hot-reload the UI theme
-  * `matrix` — Toggle falling code rain background
-  * `ai [question]` — Ask the AI assistant directly from the CLI
-  * `sudo hire gaurav` — *🔐 Easter Egg:* Bypasses access and opens contact console with admin permissions!
-  * `coffee` — *☕ Easter Egg:* Brews virtual caffeine, increasing performance metrics.
-  * `clear` / `neofetch` / `uptime` / `ping` / `pwd` / `ls` / `date`
-
-### 5. 🎨 Custom Theme System (8 Modes)
-Features 8 hot-swappable color palettes based on classic developer setups:
-* **Cyberpunk** (Default cyan-glow theme)
-* **Matrix** (Monochrome digital rain green)
-* **Tokyo Night Storm** (Sleek deep indigo/blue)
-* **Nord** (Frost arctic slate)
-* **Synthwave** (Retro-futuristic neon violet & pink)
-* **Terminal Green** (Classic high-contrast green terminal)
-* **AI Purple** (Neural network dark purple)
-* **Recruiter** (Clean, professional light mode optimized for corporate reviews)
-
-### 6. 📊 Engineering Project Hub
-* Details comprehensive Data Engineering, Analytics, and Warehousing projects with structured write-ups:
-  * **Challenges** faced (concurrency, data cleaning, processing scale).
-  * **Architectural solutions** (diagrams, logic flow).
-  * **Code Snippets** (PySpark streaming, incremental dbt models, ML feature pipelines, Star Schemas).
-  * **Performance Metrics** & **Engineering Practices** (CI/CD, scheduling, testing).
-  * **Service Health Metrics** showing real-time ping simulations.
+Built to mimic vintage CRT command terminals and futuristic cyber-grids, this terminal is fully executable in any modern web browser.
 
 ---
 
-## 🛠️ Technology Stack & Architecture
+## ⚡ [0x00] SYSTEM SPECIFICATIONS & STATUS
 
-### Front-End & Core
-* **Framework**: [Next.js 16 (App Router)](https://nextjs.org/) utilizing Turbopack compilation.
-* **Core Logic**: [React 19](https://react.dev/) & [TypeScript](https://www.typescriptlang.org/).
-* **Styling**: [Tailwind CSS](https://tailwindcss.com/) for quick layout adjustments + Vanilla CSS custom variables for real-time, runtime theme swapping.
-* **Animations**: [Framer Motion](https://www.framer.com/motion/) for fluid transitions, window physics, and CRT fade-in actions.
-* **Icons**: [Lucide React](https://lucide.dev/) and [React Icons](https://react-icons.github.io/react-icons/).
-
-### Back-End & APIs
-* **Next.js Route Handlers**:
-  * `/api/ai` — Custom vector-like AI agent query processing.
-  * `/api/github` — Real-time fetcher for public repositories, languages, and star statistics.
-  * `/api/contact` — Secure ingestion for client console contacts.
-* **Orchestration / Mailing**: Integration with [Resend](https://resend.com/) for email dispatches.
+| Mainframe Parameter | Spec / Current Allocation | Status |
+| :--- | :--- | :--- |
+| **System Kernel** | Next.js 16.1.6 (Turbopack Engine) | `ONLINE [STABLE]` |
+| **Runtime Core** | React 19.2.3 / Node.js 20+ | `ACTIVE` |
+| **Style Modules** | Tailwind CSS / HSL Dynamic Variable Mapping | `OPTIMIZED` |
+| **Neural Subsystem** | Custom Contextual AI Assistant (`/api/ai`) | `READY` |
+| **Telemetry Node** | Real-time GitHub Analytics Streamer | `ONLINE` |
+| **CRT Emulator** | Scanline Overlays + Flicker Noise Synthesizer | `FOCUSED` |
+| **Threat Index** | Zero Compilation Exceptions | `SECURE` |
 
 ---
 
-## 📂 Repository Structure
+## 🦾 [0x01] CHASSIS ARCHITECTURE & DESIGN CONCEPTS
+
+GT_OS behaves like a windowing desktop environment but runs fully on edge runtimes. The UI and backend are structured into modular cyber-modules:
 
 ```
-├── .next/                  # Next.js build outputs (gitignored)
-├── public/                 # Static assets (fonts, images, icons)
+                  ┌─────────────────────────────────────┐
+                  │          USER AGENT BROWSER         │
+                  └──────────────────┬──────────────────┘
+                                     │ (HTTP/WebSocket)
+                                     ▼
+                  ┌─────────────────────────────────────┐
+                  │            GT_OS CORE               │
+                  │   CRT Filters & Theme Provider      │
+                  └──────┬───────────────────────┬──────┘
+                         │                       │
+      ┌──────────────────▼──┐                 ┌──▼──────────────────┐
+      │   WINDOW MANAGER    │                 │   INTERACTIVE CLI   │
+      │ (Draggable Portals) │                 │     (GT_Shell)      │
+      └─────────────────────┘                 └─────────────────────┘
+                 │                                       │
+                 └───────────┬───────────────┬───────────┘
+                             │ (API Requests)│
+                             ▼               ▼
+                  ┌─────────────────────────────────────┐
+                  │         NEXT.JS EDGE RUNTIME        │
+                  └──────────┬───────────────────┬──────┘
+                             │                   │
+                             ▼                   ▼
+                  ┌─────────────────────┐ ┌─────────────┬───────┐
+                  │     AI ENGINE       │ │ GITHUB DATA │ RESEND│
+                  │  (Contextual Agent) │ │ (Live stats)│ (Mail)│
+                  └─────────────────────┘ └─────────────┴───────┘
+```
+
+### Key Subsystems:
+* **The Window Controller (`WindowManager.tsx`)**: Manages individual window states (open/close, minimize, fullscreen) and maintains active z-index stacking orders dynamically when windows are clicked.
+* **The CRT Scanline Layer (`globals.css`)**: Applies CSS-based CRT radial shadow filters and custom `@keyframes` flickers to emulate legacy cathode-ray tube terminals.
+* **The Dynamic Theme Injector (`ThemeProvider.tsx`)**: Modifies vanilla CSS variable definitions at runtime, allowing instant UI paint updates without breaking rendering cycles.
+* **The Contextual AI Agent (`/api/ai`)**: A customized API router that handles conversational prompts about Gaurav's credentials, mapping queries against cached training contexts.
+
+---
+
+## 🐚 [0x02] DECRYPTED TERMINAL COMMANDS (GT_SHELL)
+
+Access the standalone terminal at `/terminal` or launch the dashboard command line. Execute the following core commands directly into the prompt:
+
+| Command | Args | Access Level | Description | Output Type |
+| :--- | :--- | :--- | :--- | :--- |
+| **`help`** | None | Guest | Display all decipherable system commands | ASCII grid |
+| **`about`** | None | Guest | Print Gaurav's developer bio and coordinates | ASCII box |
+| **`skills`** | None | Guest | List language proficiencies and tech stack levels | Progress Bar |
+| **`experience`** | None | Guest | View educational background and active projects | Timeline chart |
+| **`projects`** | None | Guest | Query all deployed and ongoing pipeline services | Indexed list |
+| **`open`** | `[1-7]` | Guest | Retrieve deep architectural specs for a project | JSON/Writeup |
+| **`theme`** | `[name]`| Guest | Modify OS chassis color scheme immediately | Hot-Reload |
+| **`matrix`** | None | Guest | Toggle background vertical green character stream | Toggle overlay |
+| **`ai`** | `[query]`| Guest | Dispatch conversational prompt to neural processor | Live prompt |
+| **`sudo`** | `hire gaurav` | **ADMIN [🔐]** | Elevate console to open contact channels | Special event |
+| **`coffee`** | None | Guest | Brew a digital coffee to boost system execution | Easter Egg |
+| **`clear`** | None | Guest | Clear visual terminal console log buffers | Operation |
+
+---
+
+## 🎨 [0x03] CHIPSETS & SCHEMES (THEME ENGINES)
+
+The mainframe holds 8 preconfigured color schemes. You can change themes via the **Settings Window** or by typing `theme <id>` into the **GT_Shell**:
+
+```
+ █ Cyberpunk [id: cyberpunk] ------- default teal cyan neon accent
+ █ Matrix [id: matrix] ------------ code rain emerald green accent
+ █ Tokyo Night [id: tokyo-night] --- storm-sky indigo and orange glow
+ █ Nord [id: nord] ---------------- frosty blue and arctic slate clean
+ █ Synthwave [id: synthwave] ------ neon fuchsia and retro violet accent
+ █ Terminal Green [id: terminal] -- 1980s computer terminal monochrome
+ █ AI Purple [id: ai-purple] ------ cognitive intelligence neural violet
+ █ Recruiter [id: recruiter] ------ professional high-contrast light mode
+```
+
+Themes are managed programmatically in [themes.ts](file:///d:/pORTFOLIO GT/src/data/themes.ts) and map directly to standard semantic tags (`--gt-primary`, `--gt-background`, etc.).
+
+---
+
+## 💻 [0x04] SYSTEM SETUP & SECURE INITIATION
+
+Follow these protocols to initialize and deploy the portfolio locally:
+
+### 1. Ingress & Clone
+Pull the codebase from the primary branch:
+```bash
+git clone https://github.com/gauravtiwarrii/portfolio-gt.git
+cd portfolio-gt
+```
+
+### 2. Dependency Manifest
+Load the required packages and dependencies into the chassis node:
+```bash
+npm install
+```
+
+### 3. Establish Local Node (Development)
+Launch the development server running on the Turbopack engine:
+```bash
+npm run dev
+```
+Wait for compilation... The terminal node will bind to:
+```
+📡 http://localhost:3000
+```
+
+### 4. Inject Environment Credentials (Optional)
+Generate a `.env.local` file in the root directory to authorize remote APIs:
+```env
+# Mail gateway authorization
+RESEND_API_KEY=re_your_api_key
+
+# GitHub authorization token
+GITHUB_PAT=ghp_your_pat
+```
+
+---
+
+## 📁 [0x05] LOGICAL REPOSITORY OUTLINE
+
+```
+├── .next/                  # Cached Turbopack files
+├── public/                 # Embedded fonts and media assets
 └── src/
-    ├── app/                # Next.js App Router (pages and API endpoints)
-    │   ├── api/            # API Route Handlers (AI, GitHub, Contact)
-    │   ├── about/          # About view wrapper
-    │   ├── contact/        # Contact console
-    │   ├── projects/       # Dynamic project slug pages
-    │   ├── terminal/       # Standalone full-screen terminal CLI
-    │   ├── globals.css     # Global style rules and CRT effect styles
-    │   └── layout.tsx      # Base layout and provider wrappers
-    ├── components/         # React Components
-    │   ├── effects/        # Retro effects (Matrix Rain, Mouse Spotlight)
-    │   ├── modes/          # Clean recruiter mode overlay
-    │   ├── os/             # OS Elements (Draggable OSWindow, WindowManager, Taskbar, AIAssistant)
-    │   ├── providers/      # Theme and Context Providers
-    │   ├── sections/       # Tab-based dashboard content (GitHub statistics, Project grid, Skill galaxies)
-    │   └── BootScreen.tsx  # Dynamic loading and boot preloader
-    ├── data/               # Config & Mock Datasets
-    │   ├── projects.ts     # In-depth project architectural data and snippets
-    │   ├── skills.ts       # Developer skills taxonomy
-    │   ├── terminal-commands.ts # CLI parsing logic and outputs
-    │   └── themes.ts       # 8 custom color palette specifications
-    └── package.json        # Node dependency manifest
+    ├── app/                # Mainframe Application Routes
+    │   ├── api/            # Server Route Handlers (AI, GitHub, Contact Console)
+    │   ├── about/          # Cybernetic Biography
+    │   ├── contact/        # secure mail interface
+    │   ├── projects/       # Dynamic project index & challenge breakdowns
+    │   └── terminal/       # Standalone full-screen terminal CLI
+    ├── components/         # Modular portal building blocks
+    │   ├── effects/        # visual overlays (Matrix digital rain, spotlight)
+    │   ├── modes/          # Clean recruiter overlay triggers
+    │   ├── os/             # OS Core (WindowManager, Draggable Window, AIAssistant)
+    │   ├── providers/      # Global Context Providers (Theme variables)
+    │   └── sections/       # Tabbed UI grids (GitHub charts, Skill galaxies)
+    └── data/               # Config & static datasets
+        ├── projects.ts     # In-depth architectural write-ups & code blocks
+        ├── skills.ts       # Skills mapping details
+        ├── themes.ts       # Color scheme configuration maps
+        └── terminal-commands.ts # CLI script parsing logic
 ```
 
 ---
 
-## 💻 Local Setup & Development
+## 🔬 [0x06] COMPILATION & STABILITY AUDITS
 
-### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) (v18.x or later) installed.
+To compile the codebase for production and perform build verification checks, run:
 
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/gauravtiwarrii/portfolio-gt.git
-   cd portfolio-gt
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Configure Environment Variables (Optional):
-   Create a `.env.local` file in the root folder:
-   ```env
-   # API credentials for Resend (if using contact forms)
-   RESEND_API_KEY=re_your_api_key
-   
-   # GitHub Personal Access Token (if querying private repos/avoiding rate limit)
-   GITHUB_PAT=ghp_your_pat
-   ```
-
-4. Run the local development server:
-   ```bash
-   npm run dev
-   ```
-
-5. Open your browser and navigate to:
-   ```
-   http://localhost:3000
-   ```
-
-### Production Build
-
-To test production compilations and run optimized builds:
 ```bash
 # Compile and build the Next.js static and dynamic assets
 npm run build
@@ -164,40 +190,14 @@ npm run build
 npm run start
 ```
 
----
-
-## 🎨 Theme Customization
-Themes are governed by CSS custom properties. Adding or adjusting themes is as simple as adding a new object to the `themes` array in [themes.ts](file:///d:/pORTFOLIO GT/src/data/themes.ts):
-
-```typescript
-{
-  id: "custom-theme",
-  name: "My Theme",
-  label: "Sub-label",
-  colors: {
-    background: "#hex",
-    foreground: "#hex",
-    primary: "#hex",
-    secondary: "#hex",
-    accent: "#hex",
-    warning: "#hex",
-    danger: "#hex",
-    border: "rgba(r,g,b,alpha)",
-    glow: "rgba(r,g,b,alpha)",
-    surface: "rgba(r,g,b,alpha)",
-    surfaceHover: "rgba(r,g,b,alpha)",
-    muted: "#hex",
-    mutedForeground: "#hex",
-  }
-}
-```
-
-The system will dynamically populate your new theme inside the command palette, CLI auto-completion, and options panel!
+These scripts verify structural type checks (`tsc --noEmit`), execute automated lints, and bundle highly optimized static assets.
 
 ---
 
-## 🤝 Contact & Connections
-* **Developer**: Gaurav Tiwari
-* **Email**: [igauravtiwari1096@gmail.com](mailto:igauravtiwari1096@gmail.com)
-* **LinkedIn**: [/in/gauravtiwarrii](https://linkedin.com/in/gauravtiwarrii)
-* **GitHub**: [@gauravtiwarrii](https://github.com/gauravtiwarrii)
+## 📡 [0x07] ENCRYPTED TELEMETRY CHANNELS
+
+If you need to contact the admin or request system authorizations, send a transmission:
+* **Terminal Controller**: Gaurav Tiwari
+* **Secure Mail Gateway**: [igauravtiwari1096@gmail.com](mailto:igauravtiwari1096@gmail.com)
+* **LinkedIn Hub**: [/in/gauravtiwarrii](https://linkedin.com/in/gauravtiwarrii)
+* **GitHub Mainframe**: [@gauravtiwarrii](https://github.com/gauravtiwarrii)
