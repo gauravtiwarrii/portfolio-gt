@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Database, Cloud, BarChart3, Code2 } from "lucide-react";
+import { Database, Cloud, BarChart3, Code2, ShieldCheck } from "lucide-react";
 
 const services = [
     {
@@ -31,6 +31,13 @@ const services = [
         description: "Creating modern web applications with Next.js, TypeScript, and PostgreSQL databases.",
         color: "text-green-400",
         borderColor: "hover:border-green-500/30",
+    },
+    {
+        icon: ShieldCheck,
+        title: "Data Governance & Quality",
+        description: "Implementing data quality frameworks, lineage tracking, and compliance policies for enterprise data assets.",
+        color: "text-rose-400",
+        borderColor: "hover:border-rose-500/30",
     },
 ];
 

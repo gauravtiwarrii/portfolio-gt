@@ -7,7 +7,7 @@ import { ArrowLeft, Github, ExternalLink, Activity, Server, Database, Code, Zap,
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { notFound } from "next/navigation";
-import GithubStats from "@/components/GithubStats";
+
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -80,10 +80,6 @@ export default function ProjectDetails({ params }: PageProps) {
                                     {tag}
                                 </span>
                             ))}
-                        </div>
-
-                        <div className="mb-8">
-                            <GithubStats url={project.github} />
                         </div>
 
                         <div className="flex gap-3">

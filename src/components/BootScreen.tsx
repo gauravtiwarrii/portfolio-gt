@@ -1,220 +1,228 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const LINES = [
-    "> BOOT SEQUENCE INITIATED...",
-    '> LOADING CORE MODULES        [OK]',
-    '> MOUNTING DATA PIPELINES     [OK]',
-    '> SYNCING CLOUD INFRASTRUCTURE[OK]',
-    '> INITIALIZING 3D ENGINE      [OK]',
-    '> RENDERING PORTFOLIO UI      [OK]',
-    '> SYSTEM READY.',
+const BOOT_LINES = [
+  { text: "Initializing Kernel...", delay: 300 },
+  { text: "Loading Neural Engine...", delay: 400 },
+  { text: "Starting AI Modules...", delay: 350 },
+  { text: "Connecting GitHub...", delay: 500 },
+  { text: "Loading Kafka Pipelines...", delay: 450 },
+  { text: "Loading Spark Cluster...", delay: 400 },
+  { text: "Mounting Data Lakes...", delay: 350 },
+  { text: "Authenticating User...", delay: 600 },
+  { text: "GT_OS Ready.", delay: 200 },
 ];
 
-// Wireframe cube vertices and edges
-const CUBE_VERTICES = [
-    [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
-    [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1],
-];
-const CUBE_EDGES = [
-    [0, 1], [1, 2], [2, 3], [3, 0],
-    [4, 5], [5, 6], [6, 7], [7, 4],
-    [0, 4], [1, 5], [2, 6], [3, 7],
-];
+const ASCII_LOGO = `
+  ██████╗ ████████╗     ██████╗ ███████╗
+ ██╔════╝ ╚══██╔══╝    ██╔═══██╗██╔════╝
+ ██║  ███╗   ██║       ██║   ██║███████╗
+ ██║   ██║   ██║       ██║   ██║╚════██║
+ ╚██████╔╝   ██║       ╚██████╔╝███████║
+  ╚═════╝    ╚═╝        ╚═════╝ ╚══════╝
+`;
 
-function WireframeCube({ progress }: { progress: number }) {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const animRef = useRef<number>(0);
-    const timeRef = useRef(0);
+export default function BootScreen({ onComplete }: { onComplete: () => void }) {
+  const [isVisible, setIsVisible] = useState(true);
+  const [lines, setLines] = useState<string[]>([]);
+  const [progress, setProgress] = useState(0);
+  const [phase, setPhase] = useState<"boot" | "logo" | "done">("boot");
+  const [showSkip, setShowSkip] = useState(false);
+  const skipRef = useRef(false);
+  const terminalRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
+  const finishBoot = useCallback(() => {
+    if (phase === "done") return;
+    setPhase("done");
+    setProgress(100);
+    setTimeout(() => {
+      setIsVisible(false);
+      setTimeout(onComplete, 600);
+    }, 800);
+  }, [onComplete, phase]);
 
-        const size = 200;
-        canvas.width = size;
-        canvas.height = size;
+  const skipBoot = useCallback(() => {
+    skipRef.current = true;
+    finishBoot();
+  }, [finishBoot]);
 
-        const draw = () => {
-            timeRef.current += 0.015;
-            const t = timeRef.current;
+  // Show skip button after brief delay
+  useEffect(() => {
+    const t = setTimeout(() => setShowSkip(true), 500);
+    return () => clearTimeout(t);
+  }, []);
 
-            ctx.clearRect(0, 0, size, size);
+  // Skip on keypress
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === "Escape" || e.key === " ") {
+        e.preventDefault();
+        skipBoot();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [skipBoot]);
 
-            const rotX = t * 0.7;
-            const rotY = t * 0.5;
+  // Boot sequence
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-            // Rotation matrices
-            const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
-            const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+    // Check if already booted this session
+    if (sessionStorage.getItem("gt-os-booted")) {
+      setIsVisible(false);
+      onComplete();
+      return;
+    }
 
-            const project = (v: number[]) => {
-                const [x, y, z] = v;
-                // Rotate Y
-                const x1 = x * cosY - z * sinY;
-                const z1 = x * sinY + z * cosY;
-                // Rotate X
-                const y1 = y * cosX - z1 * sinX;
-                const z2 = y * sinX + z1 * cosX;
-                // Simple perspective
-                const scale = 3 / (5 + z2);
-                return [size / 2 + x1 * scale * 60, size / 2 + y1 * scale * 60];
-            };
+    let i = 0;
+    const runLine = () => {
+      if (skipRef.current) return;
+      if (i >= BOOT_LINES.length) {
+        sessionStorage.setItem("gt-os-booted", "1");
+        setPhase("logo");
+        setTimeout(() => {
+          if (!skipRef.current) finishBoot();
+        }, 1200);
+        return;
+      }
 
-            const projected = CUBE_VERTICES.map(project);
+      const currentLine = BOOT_LINES[i];
+      setLines((prev) => [...prev, currentLine.text]);
+      setProgress(Math.round(((i + 1) / BOOT_LINES.length) * 100));
+      i++;
+      setTimeout(runLine, currentLine.delay);
+    };
 
-            // Draw edges with assembly animation
-            const edgesToDraw = Math.floor(progress * CUBE_EDGES.length);
+    const timer = setTimeout(runLine, 500);
+    return () => {
+      skipRef.current = true;
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-            for (let i = 0; i < CUBE_EDGES.length; i++) {
-                const [a, b] = CUBE_EDGES[i];
-                const [x1, y1] = projected[a];
-                const [x2, y2] = projected[b];
+  // Auto-scroll terminal
+  useEffect(() => {
+    terminalRef.current?.scrollTo({ top: terminalRef.current.scrollHeight });
+  }, [lines]);
 
-                if (i < edgesToDraw) {
-                    ctx.beginPath();
-                    ctx.moveTo(x1, y1);
-                    ctx.lineTo(x2, y2);
-                    ctx.strokeStyle = `rgba(99, 102, 241, ${0.4 + progress * 0.4})`;
-                    ctx.lineWidth = 1.5;
-                    ctx.stroke();
-                } else if (i === edgesToDraw) {
-                    // Partially drawn edge
-                    const partial = (progress * CUBE_EDGES.length) % 1;
-                    ctx.beginPath();
-                    ctx.moveTo(x1, y1);
-                    ctx.lineTo(x1 + (x2 - x1) * partial, y1 + (y2 - y1) * partial);
-                    ctx.strokeStyle = `rgba(99, 102, 241, 0.6)`;
-                    ctx.lineWidth = 1.5;
-                    ctx.stroke();
-                }
-            }
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
+          style={{ background: "#050505" }}
+        >
+          {/* CRT Scanlines */}
+          <div className="absolute inset-0 crt-scanlines opacity-30 pointer-events-none" />
 
-            // Draw vertices
-            for (let i = 0; i < projected.length; i++) {
-                const vertexProgress = i / projected.length;
-                if (vertexProgress <= progress) {
-                    const [x, y] = projected[i];
-                    ctx.beginPath();
-                    ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(129, 140, 248, ${0.5 + progress * 0.5})`;
-                    ctx.fill();
+          {/* Corner Brackets */}
+          <div className="absolute top-6 left-6 w-8 h-8 border-t-2 border-l-2" style={{ borderColor: "var(--gt-primary, #00F5D4)" }} />
+          <div className="absolute top-6 right-6 w-8 h-8 border-t-2 border-r-2" style={{ borderColor: "var(--gt-primary, #00F5D4)" }} />
+          <div className="absolute bottom-6 left-6 w-8 h-8 border-b-2 border-l-2" style={{ borderColor: "var(--gt-primary, #00F5D4)" }} />
+          <div className="absolute bottom-6 right-6 w-8 h-8 border-b-2 border-r-2" style={{ borderColor: "var(--gt-primary, #00F5D4)" }} />
 
-                    // Glow
-                    ctx.beginPath();
-                    ctx.arc(x, y, 5, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(99, 102, 241, ${0.1 * progress})`;
-                    ctx.fill();
-                }
-            }
+          {/* Version label */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="font-mono text-[10px] tracking-[0.5em] uppercase mb-8"
+            style={{ color: "rgba(0,245,212,0.4)" }}
+          >
+            GT_OS v3.0 — Boot Sequence
+          </motion.p>
 
-            animRef.current = requestAnimationFrame(draw);
-        };
-
-        animRef.current = requestAnimationFrame(draw);
-        return () => cancelAnimationFrame(animRef.current);
-    }, [progress]);
-
-    return (
-        <canvas
-            ref={canvasRef}
-            className="absolute right-12 md:right-24 top-1/2 -translate-y-1/2 opacity-60"
-            style={{ width: 200, height: 200 }}
-        />
-    );
-}
-
-export default function BootScreen() {
-    const [visible, setVisible] = useState(false);
-    const [lines, setLines] = useState<string[]>([]);
-    const [done, setDone] = useState(false);
-    const [progress, setProgress] = useState(0);
-
-    useEffect(() => {
-        if (typeof window === "undefined") return;
-        if (sessionStorage.getItem("booted")) return;
-        sessionStorage.setItem("booted", "1");
-        setVisible(true);
-
-        let i = 0;
-        const show = () => {
-            setLines(prev => [...prev, LINES[i]]);
-            setProgress((i + 1) / LINES.length);
-            i++;
-            if (i < LINES.length) {
-                setTimeout(show, 260);
-            } else {
-                setTimeout(() => setDone(true), 500);
-                setTimeout(() => setVisible(false), 1100);
-            }
-        };
-        setTimeout(show, 200);
-    }, []);
-
-    return (
-        <AnimatePresence>
-            {visible && (
-                <motion.div
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="fixed inset-0 z-[9999] flex flex-col items-start justify-center px-12 md:px-24"
-                    style={{ background: "#02020a" }}
-                >
-                    {/* Scan lines */}
-                    <div
-                        className="absolute inset-0 pointer-events-none"
-                        style={{
-                            backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px)",
-                            backgroundSize: "100% 4px",
-                        }}
-                    />
-
-                    {/* Corner brackets */}
-                    <div className="absolute top-8 left-8 w-8 h-8 border-t-2 border-l-2 border-indigo-500/60" />
-                    <div className="absolute top-8 right-8 w-8 h-8 border-t-2 border-r-2 border-indigo-500/60" />
-                    <div className="absolute bottom-8 left-8 w-8 h-8 border-b-2 border-l-2 border-indigo-500/60" />
-                    <div className="absolute bottom-8 right-8 w-8 h-8 border-b-2 border-r-2 border-indigo-500/60" />
-
-                    {/* 3D Wireframe Cube */}
-                    <WireframeCube progress={progress} />
-
-                    {/* Header */}
-                    <p className="font-mono text-xs text-indigo-400/50 mb-8 tracking-widest uppercase">
-                        GAURAV TIWARI — PORTFOLIO v3.0
-                    </p>
-
-                    {/* Boot lines */}
-                    <div className="space-y-1.5">
-                        {lines.map((line, i) => (
-                            <motion.p
-                                key={i}
-                                initial={{ opacity: 0, x: -8 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.2 }}
-                                className="font-mono text-sm text-zinc-300"
-                                style={{ textShadow: "0 0 8px rgba(100,120,255,0.4)" }}
-                            >
-                                {line}
-                            </motion.p>
-                        ))}
-                    </div>
-
-                    {/* Progress bar */}
-                    {done && (
-                        <motion.div
-                            initial={{ scaleX: 0 }}
-                            animate={{ scaleX: 1 }}
-                            transition={{ duration: 0.4 }}
-                            className="mt-8 h-0.5 w-48 bg-gradient-to-r from-indigo-500 to-violet-500 origin-left"
-                        />
-                    )}
-                </motion.div>
+          {/* ASCII Logo */}
+          <AnimatePresence>
+            {phase === "logo" && (
+              <motion.pre
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-[10px] sm:text-xs font-mono leading-tight mb-8 text-center"
+                style={{ color: "#00F5D4" }}
+              >
+                {ASCII_LOGO}
+              </motion.pre>
             )}
-        </AnimatePresence>
-    );
+          </AnimatePresence>
+
+          {/* Terminal Output */}
+          <div
+            ref={terminalRef}
+            className="w-full max-w-lg px-8 space-y-1.5 max-h-60 overflow-y-auto"
+          >
+            {lines.map((line, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.15 }}
+                className="font-mono text-sm flex items-center gap-2"
+              >
+                <span style={{ color: "#00F5D4" }}>▸</span>
+                <span style={{ color: "rgba(255,255,255,0.7)" }}>{line}</span>
+                {i === lines.length - 1 && line !== "GT_OS Ready." && (
+                  <span className="text-green-400 font-bold text-xs ml-auto">[OK]</span>
+                )}
+                {line === "GT_OS Ready." && (
+                  <span className="text-green-400 font-bold text-xs ml-auto animate-glow-pulse">[ ✓ READY ]</span>
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Progress Bar */}
+          <div className="w-full max-w-lg px-8 mt-8">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-mono text-[10px] tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.3)" }}>
+                System Load
+              </span>
+              <span className="font-mono text-sm font-bold" style={{ color: "#00F5D4" }}>
+                {progress}%
+              </span>
+            </div>
+            <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full rounded-full"
+                style={{
+                  background: "linear-gradient(90deg, #00F5D4, #8B5CF6)",
+                  boxShadow: "0 0 15px rgba(0,245,212,0.5)",
+                }}
+                initial={{ width: "0%" }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              />
+            </div>
+          </div>
+
+          {/* Skip Button */}
+          <AnimatePresence>
+            {showSkip && phase !== "done" && (
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.3 }}
+                onClick={skipBoot}
+                className="absolute bottom-12 font-mono text-xs tracking-widest uppercase px-4 py-2 border rounded transition-all hover:bg-white/5"
+                style={{
+                  color: "rgba(255,255,255,0.3)",
+                  borderColor: "rgba(255,255,255,0.1)",
+                }}
+              >
+                Skip Boot ⏎
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }

@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 const ROLES = [
-    "Data Engineer",
+    "Professional Data Engineer",
     "Pipeline Architect",
-    "ML Practitioner",
-    "Cloud Native Dev",
+    "Cloud Data Specialist",
+    "GCP & AWS Engineer",
     "Analytics Engineer",
 ];
 

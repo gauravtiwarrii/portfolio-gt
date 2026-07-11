@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Terminal, Code2, Play } from "lucide-react";
 
-const LINE_NUMBERS = Array.from({ length: 18 }, (_, i) => i + 1);
+const LINE_NUMBERS = Array.from({ length: 19 }, (_, i) => i + 1);
 
 export default function AboutSection() {
     const lines = LINE_NUMBERS;
@@ -68,22 +68,23 @@ export default function AboutSection() {
                             </div>
                             {/* Code Content */}
                             <div className="flex-1 min-w-[500px]">
-                                <div><span className="text-purple-400 font-medium">import</span> {`{ Engineer }`} <span className="text-purple-400 font-medium">from</span> <span className="text-yellow-300">{`'@core/identity'`}</span>;</div>
-                                <div><span className="text-purple-400 font-medium">import</span> {`{ Pipeline, Architecture }`} <span className="text-purple-400 font-medium">from</span> <span className="text-yellow-300">{`'@core/cloud'`}</span>;</div>
+                                <div><span className="text-purple-400 font-medium">import</span> {`{ ProfessionalEngineer }`} <span className="text-purple-400 font-medium">from</span> <span className="text-yellow-300">{`'@core/identity'`}</span>;</div>
+                                <div><span className="text-purple-400 font-medium">import</span> {`{ Pipeline, Architecture }`} <span className="text-purple-400 font-medium">from</span> <span className="text-yellow-300">{`'@gcp/dataflow'`}</span>;</div>
                                 <br />
-                                <div><span className="text-purple-400 font-medium">export class</span> <span className="text-emerald-400 font-semibold">GauravTiwari</span> <span className="text-purple-400 font-medium">implements</span> <span className="text-teal-400 font-semibold">Engineer</span> {`{`}</div>
+                                <div><span className="text-purple-400 font-medium">export class</span> <span className="text-emerald-400 font-semibold">GauravTiwari</span> <span className="text-purple-400 font-medium">implements</span> <span className="text-teal-400 font-semibold">ProfessionalEngineer</span> {`{`}</div>
                                 <div className="pl-6"><span className="text-zinc-500 italic">{`/**`}</span></div>
-                                <div className="pl-6"><span className="text-zinc-500 italic">{` * Turning raw data into strategic assets with`}</span></div>
-                                <div className="pl-6"><span className="text-zinc-500 italic">{` * robust pipelines, cloud-native architectures,`}</span></div>
-                                <div className="pl-6"><span className="text-zinc-500 italic">{` * and real-time processing systems.`}</span></div>
+                                <div className="pl-6"><span className="text-zinc-500 italic">{` * Engineering enterprise-scale, GCP-native pipelines`}</span></div>
+                                <div className="pl-6"><span className="text-zinc-500 italic">{` * powered by BigQuery, Dataflow, and Pub/Sub —`}</span></div>
+                                <div className="pl-6"><span className="text-zinc-500 italic">{` * turning raw data into strategic assets at scale.`}</span></div>
                                 <div className="pl-6"><span className="text-zinc-500 italic">{` */`}</span></div>
-                                <div className="pl-6"><span className="text-blue-400">role</span>: <span className="text-yellow-300">{`"Data Engineer"`}</span>;</div>
+                                <div className="pl-6"><span className="text-blue-400">role</span>: <span className="text-yellow-300">{`"Professional Data Engineer"`}</span>;</div>
                                 <div className="pl-6"><span className="text-blue-400">location</span>: <span className="text-yellow-300">{`"India"`}</span>;</div>
                                 <br />
                                 <div className="pl-6"><span className="text-red-400 font-medium">async</span> <span className="text-blue-400">buildInfrastructure</span>() {`{`}</div>
                                 <div className="pl-12"><span className="text-purple-400 font-medium">return new</span> <span className="text-emerald-400 font-semibold">Pipeline</span>({`{`} </div>
                                 <div className="pl-16">scalable: <span className="text-purple-400">true</span>,</div>
-                                <div className="pl-16">latency: <span className="text-yellow-300">{`"zero"`}</span></div>
+                                <div className="pl-16">cloud: <span className="text-yellow-300">{`"gcp"`}</span>,</div>
+                                <div className="pl-16">latency: <span className="text-yellow-300">{`"sub-second"`}</span></div>
                                 <div className="pl-12">{`});`}</div>
                                 <div className="pl-6">{`}`}</div>
                                 <div>{`}`}</div>
@@ -114,7 +115,7 @@ export default function AboutSection() {
                                 <span className="text-purple-400 font-bold">{`>`}</span>
                                 <span className="text-zinc-300">node ./dist/about.js</span>
                             </div>
-                            <div className="text-zinc-400 pl-4 border-l border-white/10 ml-1">Initializing Data Engineer Instance...</div>
+                            <div className="text-zinc-400 pl-4 border-l border-white/10 ml-1">Initializing Professional Data Engineer Instance...</div>
                             <div className="text-yellow-500 border-l border-yellow-500/50 pl-4 ml-1 space-y-1">
                                 <div>[INFO] Connecting to Cloud Infrastructure...</div>
                                 <div>[INFO] Establishing real-time pipelines...</div>

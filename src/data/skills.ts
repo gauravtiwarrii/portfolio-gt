@@ -12,6 +12,7 @@ export const skills = {
         { name: "Apache Airflow", level: "Advanced", desc: "Orchestration, DAGs" },
         { name: "Apache Kafka", level: "Intermediate", desc: "Real-time Streaming" },
         { name: "Batch & Stream Processing", level: "Advanced", desc: "Architecture Patterns" },
+        { name: "dbt", level: "Intermediate", desc: "Data Transformation" },
     ],
     databases: [
         { name: "PostgreSQL", level: "Expert", desc: "Relational DB, Indexing" },
@@ -29,6 +30,11 @@ export const skills = {
         { name: "BigQuery", level: "Intermediate", desc: "Basics" },
         { name: "Docker", level: "Advanced", desc: "Containerization" },
         { name: "Git & GitHub", level: "Expert", desc: "Version Control" },
+        { name: "Dataflow", level: "Intermediate", desc: "Serverless Stream & Batch" },
+        { name: "Dataproc", level: "Intermediate", desc: "Managed Spark/Hadoop" },
+        { name: "Pub/Sub", level: "Intermediate", desc: "Messaging & Event Streaming" },
+        { name: "Cloud Composer", level: "Intermediate", desc: "Managed Airflow" },
+        { name: "Cloud Storage", level: "Intermediate", desc: "Object Storage" },
     ],
     coreConcepts: [
         { name: "Data Lakes", level: "Advanced", desc: "Storage Patterns" },
@@ -37,6 +43,8 @@ export const skills = {
         { name: "Logging & Monitoring", level: "Intermediate", desc: "Observability" },
         { name: "Data Validation", level: "Intermediate", desc: "Quality Checks" },
         { name: "CI/CD Basics", level: "Intermediate", desc: "Pipeline Automation" },
+        { name: "Data Governance", level: "Intermediate", desc: "Policies & Compliance" },
+        { name: "Data Lineage", level: "Intermediate", desc: "Tracking & Auditing" },
     ]
 };
 

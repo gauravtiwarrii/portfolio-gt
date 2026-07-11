@@ -53,9 +53,10 @@ export default function CommandPalette() {
     ];
 
     const projectLinks = [
+        { name: "Real-Time Retail Data Pipeline", href: "/projects/real-time-retail-data-pipeline", icon: Code, category: "Projects" },
+        { name: "Flight Analytics Data Warehouse", href: "/projects/flight-analytics-data-warehouse", icon: Code, category: "Projects" },
+        { name: "Flight Delay Prediction System", href: "/projects/flight-delay-prediction", icon: Code, category: "Projects" },
         { name: "Retail ETL Pipeline", href: "/projects/retail-etl-pipeline", icon: Code, category: "Projects" },
-        { name: "Uber Data Analytics", href: "/projects/uber-data-analytics", icon: Code, category: "Projects" },
-        { name: "Real-time Vehicle Tracking", href: "/projects/vehicle-tracking", icon: Code, category: "Projects" },
     ];
 
     const allLinks = [...navigationLinks, ...projectLinks];
