@@ -22,6 +22,8 @@ const OSWindow = dynamic(() => import("@/components/os/OSWindow"), { ssr: false 
 const Snake = dynamic(() => import("@/components/os/Snake"), { ssr: false });
 const BugDodge = dynamic(() => import("@/components/os/BugDodge"), { ssr: false });
 const Paint = dynamic(() => import("@/components/os/Paint"), { ssr: false });
+const CommandPalette = dynamic(() => import("@/components/CommandPalette"), { ssr: false });
+const CyberCursor = dynamic(() => import("@/components/effects/CyberCursor"), { ssr: false });
 const RecruiterMode = dynamic(() => import("@/components/modes/RecruiterMode"), { ssr: false });
 
 function LayoutInner({ children }: { children: React.ReactNode }) {
@@ -85,6 +87,12 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
     <>
       {/* Boot Screen */}
       {!skipBoot && !booted && <BootScreen onComplete={() => setBooted(true)} />}
+
+      {/* Cyber Cursor Binary Trail */}
+      {booted && <CyberCursor />}
+
+      {/* Spotlight Command Palette */}
+      {booted && <CommandPalette />}
 
       {/* Background Effects — hidden in recruiter mode */}
       {!isRecruiterMode && (

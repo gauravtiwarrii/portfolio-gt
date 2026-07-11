@@ -2,6 +2,7 @@
 
 import { Github, Linkedin, Mail, ArrowUp, Terminal } from "lucide-react";
 import Link from "next/link";
+import { useSound } from "@/components/effects/useSound";
 
 const exploreLinks = [
   { label: "./home", href: "/" },
@@ -18,7 +19,12 @@ const socialLinks = [
 ];
 
 export default function Footer() {
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const { playBeep } = useSound();
+  
+  const scrollToTop = () => {
+    playBeep(900, "sine", 0.08);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <footer
@@ -80,6 +86,8 @@ export default function Footer() {
                 <li key={href}>
                   <Link
                     href={href}
+                    onMouseEnter={() => playBeep(1000, "sine", 0.01)}
+                    onClick={() => playBeep(850, "sine", 0.05)}
                     className="text-sm transition-all duration-300 flex items-center gap-2 group"
                     style={{ color: "var(--gt-muted-fg)" }}
                   >
@@ -105,6 +113,8 @@ export default function Footer() {
                     href={href}
                     target={href.startsWith("http") ? "_blank" : undefined}
                     rel="noopener noreferrer"
+                    onMouseEnter={() => playBeep(1000, "sine", 0.01)}
+                    onClick={() => playBeep(850, "sine", 0.05)}
                     className="flex items-center gap-3 text-sm transition-all duration-300 group"
                     style={{ color: "var(--gt-muted-fg)" }}
                   >
@@ -124,6 +134,8 @@ export default function Footer() {
             <div className="space-y-4 font-mono">
               <a
                 href="mailto:igauravtiwari1096@gmail.com"
+                onMouseEnter={() => playBeep(1000, "sine", 0.01)}
+                onClick={() => playBeep(850, "sine", 0.05)}
                 className="flex items-center gap-3 text-sm transition-all group"
                 style={{ color: "var(--gt-muted-fg)" }}
               >
@@ -149,6 +161,7 @@ export default function Footer() {
           </p>
           <button
             onClick={scrollToTop}
+            onMouseEnter={() => playBeep(1000, "sine", 0.01)}
             className="group flex items-center gap-2 px-4 py-2 rounded-md text-xs transition-all"
             style={{
               background: "var(--gt-surface)",

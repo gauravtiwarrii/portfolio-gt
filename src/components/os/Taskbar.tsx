@@ -17,8 +17,10 @@ import {
   Menu,
   X,
   Briefcase,
+  Search,
 } from "lucide-react";
 import { useTheme } from "@/components/providers/ThemeProvider";
+import { useSound } from "@/components/effects/useSound";
 
 const navItems = [
   { name: "Home", path: "/", icon: Home, shortcut: "~" },
@@ -33,6 +35,7 @@ export default function Taskbar() {
   const pathname = usePathname();
   const { themeId, setThemeById, allThemes, isRecruiterMode, toggleRecruiterMode } =
     useTheme();
+  const { playBeep } = useSound();
   const [time, setTime] = useState("");
   const [cpu, setCpu] = useState("12%");
   const [showThemes, setShowThemes] = useState(false);
@@ -119,7 +122,9 @@ export default function Taskbar() {
               <Link
                 key={item.path}
                 href={item.path}
+                onMouseEnter={() => playBeep(1000, "sine", 0.01)}
                 onClick={(e) => {
+                  playBeep(850, "sine", 0.05);
                   if (item.path.startsWith("#")) {
                     e.preventDefault();
                     handleNavClick(item.path);
@@ -162,10 +167,29 @@ export default function Taskbar() {
             </span>
           </div>
 
+          {/* Command Search Trigger */}
+          <button
+            onClick={() => {
+              playBeep(900, "sine", 0.04);
+              window.dispatchEvent(new CustomEvent("open-command-palette"));
+            }}
+            className="p-1.5 rounded transition-colors"
+            style={{ color: "var(--gt-muted-fg)" }}
+            onMouseEnter={() => playBeep(1000, "sine", 0.01)}
+            aria-label="Search Command Console"
+            title="Search Command Console"
+          >
+            <Search size={14} />
+          </button>
+
           {/* Theme Switcher */}
           <div className="relative">
             <button
-              onClick={() => setShowThemes(!showThemes)}
+              onClick={() => {
+                playBeep(850, "sine", 0.04);
+                setShowThemes(!showThemes);
+              }}
+              onMouseEnter={() => playBeep(1000, "sine", 0.01)}
               className="p-1.5 rounded transition-colors"
               style={{ color: "var(--gt-muted-fg)", background: showThemes ? "var(--gt-surface-hover)" : "transparent" }}
               aria-label="Theme switcher"
@@ -184,6 +208,7 @@ export default function Taskbar() {
                     <button
                       key={t.id}
                       onClick={() => {
+                        playBeep(1200, "sine", 0.06);
                         setThemeById(t.id);
                         setShowThemes(false);
                       }}
@@ -207,7 +232,11 @@ export default function Taskbar() {
 
           {/* Recruiter Mode Toggle */}
           <button
-            onClick={toggleRecruiterMode}
+            onClick={() => {
+              playBeep(800, "triangle", 0.08);
+              toggleRecruiterMode();
+            }}
+            onMouseEnter={() => playBeep(1000, "sine", 0.01)}
             className="p-1.5 rounded transition-colors"
             style={{ color: isRecruiterMode ? "var(--gt-primary)" : "var(--gt-muted-fg)" }}
             aria-label={isRecruiterMode ? "Switch to Developer Mode" : "Switch to Recruiter Mode"}
@@ -219,6 +248,8 @@ export default function Taskbar() {
           {/* Terminal Link */}
           <Link
             href="/terminal"
+            onMouseEnter={() => playBeep(1000, "sine", 0.01)}
+            onClick={() => playBeep(1100, "sine", 0.06)}
             className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-widest transition-all"
             style={{
               color: "var(--gt-primary)",
@@ -232,7 +263,10 @@ export default function Taskbar() {
 
           {/* Mobile hamburger */}
           <button
-            onClick={() => setMobileOpen(!mobileOpen)}
+            onClick={() => {
+              playBeep(850, "sine", 0.04);
+              setMobileOpen(!mobileOpen);
+            }}
             className="md:hidden p-1.5 rounded"
             style={{ color: "var(--gt-fg)" }}
             aria-label="Toggle menu"
