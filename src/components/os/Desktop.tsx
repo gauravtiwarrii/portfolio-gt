@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MessageSquare, Activity, Network, Terminal, Gamepad2, Coffee, Palette } from "lucide-react";
+import { MessageSquare, Activity, Network, Terminal, Gamepad2, Coffee, Palette, Sliders } from "lucide-react";
 import { useWindowManager } from "@/components/os/WindowManager";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { useSound } from "@/components/effects/useSound";
@@ -22,6 +22,7 @@ const ICONS: DesktopIcon[] = [
   { id: "snake-window", name: "Snake.exe", title: "Cyber-Snake v1.0", icon: Gamepad2 },
   { id: "bugdodge-window", name: "BugDodge.exe", title: "Bug Dodger Arcade", icon: Coffee },
   { id: "paint-window", name: "Paint.exe", title: "Retro Cyber-Paint", icon: Palette },
+  { id: "theme-customizer-window", name: "ThemeCustom.exe", title: "Theme Customizer", icon: Sliders },
 ];
 
 export default function Desktop() {

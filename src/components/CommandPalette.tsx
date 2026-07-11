@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { 
   Search, Code, BookOpen, Mail, Home, User, ArrowRight, 
-  Activity, MessageSquare, Network, Gamepad2, Coffee, Palette, Settings 
+  Activity, MessageSquare, Network, Gamepad2, Coffee, Palette, Settings, Sliders 
 } from "lucide-react";
 import { useWindowManager } from "@/components/os/WindowManager";
 import { useTheme } from "@/components/providers/ThemeProvider";
@@ -73,6 +73,7 @@ export default function CommandPalette() {
     { name: "Launch Cyber-Snake Game (Snake.exe)", action: "open-snake-window", icon: Gamepad2, category: "Applications" },
     { name: "Launch Bug Dodger Arcade (BugDodge.exe)", action: "open-bugdodge-window", icon: Coffee, category: "Applications" },
     { name: "Launch Retro Cyber-Paint (Paint.exe)", action: "open-paint-window", icon: Palette, category: "Applications" },
+    { name: "Launch Theme Customizer (ThemeCustom.exe)", action: "open-theme-customizer-window", icon: Sliders, category: "Applications" },
   ];
 
   const themeCommands = isRecruiterMode ? [] : [
@@ -114,7 +115,8 @@ export default function CommandPalette() {
           winId === "ai-assistant" ? "Uplink Chat Assistant" :
           winId === "snake-window" ? "Cyber-Snake v1.0" :
           winId === "bugdodge-window" ? "Bug Dodger Arcade" :
-          winId === "paint-window" ? "Retro Cyber-Paint" : "System Application";
+          winId === "paint-window" ? "Retro Cyber-Paint" :
+          winId === "theme-customizer-window" ? "Theme Customizer" : "System Application";
         
         openWindow(winId, title);
       } else if (link.action.startsWith("theme-")) {

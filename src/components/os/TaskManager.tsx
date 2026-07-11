@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { useSound } from "@/components/effects/useSound";
 import { useWindowManager } from "@/components/os/WindowManager";
-import { ToggleLeft, ToggleRight, MessageSquare, Gamepad2, Coffee, Palette } from "lucide-react";
+import { ToggleLeft, ToggleRight, MessageSquare, Gamepad2, Coffee, Palette, Sliders } from "lucide-react";
 
 export default function TaskManager() {
   const { 
@@ -360,6 +360,33 @@ export default function TaskManager() {
                 </button>
               ) : (
                 <span className="text-zinc-600 flex items-center gap-1"><Palette size={10} /> Idle</span>
+              )}
+            </div>
+          </div>
+
+          {/* Item 9: Theme Customizer */}
+          <div className="grid grid-cols-12 items-center px-4 py-2 text-[11px]">
+            <span className="col-span-5 font-bold flex items-center gap-1.5 text-zinc-300">
+              <span className={`w-1.5 h-1.5 rounded-full ${isWindowOpen("theme-customizer-window") ? "bg-green-500" : "bg-red-500"}`} />
+              theme-custom.exe
+            </span>
+            <span className="col-span-2 text-center text-zinc-400">{isWindowOpen("theme-customizer-window") ? "2.5%" : "0.0%"}</span>
+            <span className={`col-span-2 text-center font-bold ${isWindowOpen("theme-customizer-window") ? "text-green-500" : "text-red-500"}`}>
+              {isWindowOpen("theme-customizer-window") ? "RUNNING" : "STOPPED"}
+            </span>
+            <div className="col-span-3 flex justify-end text-zinc-500 font-bold uppercase text-[9px] gap-1 pr-1.5">
+              {isWindowOpen("theme-customizer-window") ? (
+                <button 
+                  onClick={() => {
+                    playBeep(300, "sawtooth", 0.05);
+                    closeWindow("theme-customizer-window");
+                  }}
+                  className="text-red-400 hover:text-red-300 font-bold hover:underline"
+                >
+                  End Task
+                </button>
+              ) : (
+                <span className="text-zinc-600 flex items-center gap-1"><Sliders size={10} /> Idle</span>
               )}
             </div>
           </div>

@@ -21,6 +21,7 @@ const OSWindow = dynamic(() => import("@/components/os/OSWindow"), { ssr: false 
 const Snake = dynamic(() => import("@/components/os/Snake"), { ssr: false });
 const BugDodge = dynamic(() => import("@/components/os/BugDodge"), { ssr: false });
 const Paint = dynamic(() => import("@/components/os/Paint"), { ssr: false });
+const ThemeCustomizer = dynamic(() => import("@/components/os/ThemeCustomizer"), { ssr: false });
 const CommandPalette = dynamic(() => import("@/components/CommandPalette"), { ssr: false });
 const RecruiterMode = dynamic(() => import("@/components/modes/RecruiterMode"), { ssr: false });
 
@@ -76,6 +77,8 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
         return <BugDodge />;
       case "paint-window":
         return <Paint />;
+      case "theme-customizer-window":
+        return <ThemeCustomizer />;
       default:
         return null;
     }
@@ -135,6 +138,7 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
                     win.id === "snake-window" ? "440px" : 
                     win.id === "bugdodge-window" ? "400px" : 
                     win.id === "paint-window" ? "520px" : 
+                    win.id === "theme-customizer-window" ? "460px" : 
                     "800px"
                   }
                   height={
@@ -144,6 +148,7 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
                     win.id === "snake-window" ? "520px" : 
                     win.id === "bugdodge-window" ? "480px" : 
                     win.id === "paint-window" ? "450px" : 
+                    win.id === "theme-customizer-window" ? "530px" : 
                     "600px"
                   }
                 >

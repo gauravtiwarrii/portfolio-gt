@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { themes, recruiterTheme, DEFAULT_THEME_ID, type ThemeDefinition } from "@/data/themes";
+import { themes, recruiterTheme, DEFAULT_THEME_ID, type ThemeDefinition, type ThemeColors } from "@/data/themes";
 
 interface ThemeContextType {
   theme: ThemeDefinition;
@@ -16,6 +16,7 @@ interface ThemeContextType {
   setShowCrt: (val: boolean) => void;
   isMuted: boolean;
   setIsMuted: (val: boolean) => void;
+  updateCustomTheme: (colors: ThemeColors) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
@@ -48,6 +49,7 @@ const STORAGE_KEY_MUTE = "gt-os-mute";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [themeId, setThemeId] = useState(DEFAULT_THEME_ID);
+  const [customTheme, setCustomTheme] = useState<ThemeDefinition | null>(null);
   const [isRecruiterMode, setIsRecruiterMode] = useState(false);
   const [showMatrixRain, setShowMatrixRainState] = useState(true);
   const [showCrt, setShowCrtState] = useState(true);
@@ -61,9 +63,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const savedMatrix = localStorage.getItem(STORAGE_KEY_MATRIX);
     const savedCrt = localStorage.getItem(STORAGE_KEY_CRT);
     const savedMute = localStorage.getItem(STORAGE_KEY_MUTE);
+    const savedCustom = localStorage.getItem("gt-os-custom-theme");
 
     setTimeout(() => {
-      if (savedTheme && themes.find((t) => t.id === savedTheme)) {
+      if (savedCustom) {
+        try {
+          setCustomTheme(JSON.parse(savedCustom));
+        } catch {}
+      }
+      if (savedTheme && (themes.find((t) => t.id === savedTheme) || savedTheme === "custom")) {
         setThemeId(savedTheme);
       }
       if (savedRecruiter === "true") {
@@ -87,17 +95,24 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (!mounted) return;
     const activeTheme = isRecruiterMode
       ? recruiterTheme
+      : themeId === "custom" && customTheme
+      ? customTheme
       : themes.find((t) => t.id === themeId) || themes[0];
     applyThemeToDOM(activeTheme);
-  }, [themeId, isRecruiterMode, mounted]);
+  }, [themeId, isRecruiterMode, customTheme, mounted]);
 
   const setThemeById = useCallback((id: string) => {
+    if (id === "custom" && customTheme) {
+      setThemeId(id);
+      localStorage.setItem(STORAGE_KEY_THEME, id);
+      return;
+    }
     const found = themes.find((t) => t.id === id);
     if (found) {
       setThemeId(id);
       localStorage.setItem(STORAGE_KEY_THEME, id);
     }
-  }, []);
+  }, [customTheme]);
 
   const toggleRecruiterMode = useCallback(() => {
     setIsRecruiterMode((prev) => {
@@ -122,9 +137,26 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem(STORAGE_KEY_MUTE, String(val));
   }, []);
 
+  const updateCustomTheme = useCallback((colors: ThemeColors) => {
+    const newTheme: ThemeDefinition = {
+      id: "custom",
+      name: "Custom Theme",
+      label: "User-defined colors",
+      colors,
+    };
+    setCustomTheme(newTheme);
+    setThemeId("custom");
+    localStorage.setItem("gt-os-custom-theme", JSON.stringify(newTheme));
+    localStorage.setItem(STORAGE_KEY_THEME, "custom");
+  }, []);
+
   const activeTheme = isRecruiterMode
     ? recruiterTheme
+    : themeId === "custom" && customTheme
+    ? customTheme
     : themes.find((t) => t.id === themeId) || themes[0];
+
+  const allThemesList = customTheme ? [...themes, customTheme] : themes;
 
   return (
     <ThemeContext.Provider
@@ -134,13 +166,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         setThemeById,
         isRecruiterMode,
         toggleRecruiterMode,
-        allThemes: themes,
+        allThemes: allThemesList,
         showMatrixRain,
         setShowMatrixRain,
         showCrt,
         setShowCrt,
         isMuted,
         setIsMuted,
+        updateCustomTheme,
       }}
     >
       <div style={!mounted ? { visibility: "hidden" } : undefined}>
