@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { 
   Search, Code, BookOpen, Mail, Home, User, ArrowRight, 
-  Activity, Sparkles, Network, Gamepad2, Coffee, Palette, Settings 
+  Activity, MessageSquare, Network, Gamepad2, Coffee, Palette, Settings 
 } from "lucide-react";
 import { useWindowManager } from "@/components/os/WindowManager";
 import { useTheme } from "@/components/providers/ThemeProvider";
@@ -68,7 +68,7 @@ export default function CommandPalette() {
 
   const systemCommands = [
     { name: "Launch Task Manager (TaskMgr.exe)", action: "open-task-manager", icon: Activity, category: "Applications" },
-    { name: "Launch AI Neural Copilot (Brain.exe)", action: "open-ai-assistant", icon: Sparkles, category: "Applications" },
+    { name: "Launch Chat Assistant (Copilot.exe)", action: "open-ai-assistant", icon: MessageSquare, category: "Applications" },
     { name: "Launch Kafka Load Simulator (Pipeline.exe)", action: "open-pipeline-simulator", icon: Network, category: "Applications" },
     { name: "Launch Cyber-Snake Game (Snake.exe)", action: "open-snake-window", icon: Gamepad2, category: "Applications" },
     { name: "Launch Bug Dodger Arcade (BugDodge.exe)", action: "open-bugdodge-window", icon: Coffee, category: "Applications" },
@@ -111,7 +111,7 @@ export default function CommandPalette() {
         const title = 
           winId === "task-manager" ? "System Task Manager" :
           winId === "pipeline-simulator" ? "Kafka Load Simulator" :
-          winId === "ai-assistant" ? "AI Neural Copilot" :
+          winId === "ai-assistant" ? "Uplink Chat Assistant" :
           winId === "snake-window" ? "Cyber-Snake v1.0" :
           winId === "bugdodge-window" ? "Bug Dodger Arcade" :
           winId === "paint-window" ? "Retro Cyber-Paint" : "System Application";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, Activity, Network, Terminal, Gamepad2, Coffee, Palette } from "lucide-react";
+import { MessageSquare, Activity, Network, Terminal, Gamepad2, Coffee, Palette } from "lucide-react";
 import { useWindowManager } from "@/components/os/WindowManager";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { useSound } from "@/components/effects/useSound";
@@ -15,7 +15,7 @@ interface DesktopIcon {
 }
 
 const ICONS: DesktopIcon[] = [
-  { id: "ai-assistant", name: "Brain.exe", title: "AI Neural Copilot", icon: Sparkles },
+  { id: "ai-assistant", name: "Copilot.exe", title: "Uplink Chat Assistant", icon: MessageSquare },
   { id: "task-manager", name: "TaskMgr.exe", title: "System Task Manager", icon: Activity },
   { id: "pipeline-simulator", name: "Pipeline.exe", title: "Kafka Load Simulator", icon: Network },
   { id: "terminal-window", name: "Shell.exe", title: "GT_OS Shell CLI", icon: Terminal },

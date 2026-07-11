@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { useSound } from "@/components/effects/useSound";
 import { useWindowManager } from "@/components/os/WindowManager";
-import { ToggleLeft, ToggleRight, Sparkles, Gamepad2, Coffee, Palette } from "lucide-react";
+import { ToggleLeft, ToggleRight, MessageSquare, Gamepad2, Coffee, Palette } from "lucide-react";
 
 export default function TaskManager() {
   const { 
@@ -256,11 +256,11 @@ export default function TaskManager() {
             </div>
           </div>
 
-          {/* Item 5: AI Assistant */}
+          {/* Item 5: Assistant */}
           <div className="grid grid-cols-12 items-center px-4 py-2 text-[11px]">
             <span className="col-span-5 font-bold flex items-center gap-1.5 text-zinc-300">
               <span className={`w-1.5 h-1.5 rounded-full ${isWindowOpen("ai-assistant") ? "bg-green-500" : "bg-red-500"}`} />
-              brain-assistant.exe
+              copilot-assistant.exe
             </span>
             <span className="col-span-2 text-center text-zinc-400">{isWindowOpen("ai-assistant") ? "1.8%" : "0.0%"}</span>
             <span className={`col-span-2 text-center font-bold ${isWindowOpen("ai-assistant") ? "text-green-500" : "text-red-500"}`}>
@@ -278,7 +278,7 @@ export default function TaskManager() {
                   End Task
                 </button>
               ) : (
-                <span className="text-zinc-600 flex items-center gap-1"><Sparkles size={10} /> Idle</span>
+                <span className="text-zinc-600 flex items-center gap-1"><MessageSquare size={10} /> Idle</span>
               )}
             </div>
           </div>

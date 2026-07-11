@@ -13,7 +13,6 @@ import MouseSpotlight from "@/components/effects/MouseSpotlight";
 import Footer from "@/components/Footer";
 import dynamic from "next/dynamic";
 
-const AIAssistant = dynamic(() => import("@/components/os/AIAssistant"), { ssr: false });
 const AIAssistantChat = dynamic(() => import("@/components/os/AIAssistant").then(m => m.AIAssistantChat), { ssr: false });
 const TaskManager = dynamic(() => import("@/components/os/TaskManager"), { ssr: false });
 const PipelineSimulator = dynamic(() => import("@/components/os/PipelineSimulator"), { ssr: false });
@@ -23,7 +22,6 @@ const Snake = dynamic(() => import("@/components/os/Snake"), { ssr: false });
 const BugDodge = dynamic(() => import("@/components/os/BugDodge"), { ssr: false });
 const Paint = dynamic(() => import("@/components/os/Paint"), { ssr: false });
 const CommandPalette = dynamic(() => import("@/components/CommandPalette"), { ssr: false });
-const CyberCursor = dynamic(() => import("@/components/effects/CyberCursor"), { ssr: false });
 const RecruiterMode = dynamic(() => import("@/components/modes/RecruiterMode"), { ssr: false });
 
 function LayoutInner({ children }: { children: React.ReactNode }) {
@@ -88,9 +86,6 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
       {/* Boot Screen */}
       {!skipBoot && !booted && <BootScreen onComplete={() => setBooted(true)} />}
 
-      {/* Cyber Cursor Binary Trail */}
-      {booted && <CyberCursor />}
-
       {/* Spotlight Command Palette */}
       {booted && <CommandPalette />}
 
@@ -115,9 +110,6 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
 
       {/* Taskbar */}
       {booted && <Taskbar />}
-
-      {/* AI Assistant Floating Button */}
-      {booted && !isRecruiterMode && <AIAssistant />}
 
       {/* Active OS Windows */}
       {booted && !isRecruiterMode && (
