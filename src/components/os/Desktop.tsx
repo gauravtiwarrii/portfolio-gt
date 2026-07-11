@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, Activity, Network, Terminal } from "lucide-react";
+import { Sparkles, Activity, Network, Terminal, Gamepad2, Coffee, Palette } from "lucide-react";
 import { useWindowManager } from "@/components/os/WindowManager";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { useSound } from "@/components/effects/useSound";
@@ -19,6 +19,9 @@ const ICONS: DesktopIcon[] = [
   { id: "task-manager", name: "TaskMgr.exe", title: "System Task Manager", icon: Activity },
   { id: "pipeline-simulator", name: "Pipeline.exe", title: "Kafka Load Simulator", icon: Network },
   { id: "terminal-window", name: "Shell.exe", title: "GT_OS Shell CLI", icon: Terminal },
+  { id: "snake-window", name: "Snake.exe", title: "Cyber-Snake v1.0", icon: Gamepad2 },
+  { id: "bugdodge-window", name: "BugDodge.exe", title: "Bug Dodger Arcade", icon: Coffee },
+  { id: "paint-window", name: "Paint.exe", title: "Retro Cyber-Paint", icon: Palette },
 ];
 
 export default function Desktop() {

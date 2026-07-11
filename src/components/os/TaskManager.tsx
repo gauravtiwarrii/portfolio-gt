@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { useSound } from "@/components/effects/useSound";
-import { ToggleLeft, ToggleRight, Sparkles, Ban } from "lucide-react";
+import { useWindowManager } from "@/components/os/WindowManager";
+import { ToggleLeft, ToggleRight, Sparkles, Gamepad2, Coffee, Palette } from "lucide-react";
 
 export default function TaskManager() {
   const { 
@@ -13,6 +14,7 @@ export default function TaskManager() {
   } = useTheme();
   
   const { playBeep } = useSound();
+  const { isWindowOpen, closeWindow } = useWindowManager();
   
   const cpuCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const memCanvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -257,13 +259,108 @@ export default function TaskManager() {
           {/* Item 5: AI Assistant */}
           <div className="grid grid-cols-12 items-center px-4 py-2 text-[11px]">
             <span className="col-span-5 font-bold flex items-center gap-1.5 text-zinc-300">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+              <span className={`w-1.5 h-1.5 rounded-full ${isWindowOpen("ai-assistant") ? "bg-green-500" : "bg-red-500"}`} />
               brain-assistant.exe
             </span>
-            <span className="col-span-2 text-center text-zinc-400">0.0%</span>
-            <span className="col-span-2 text-center text-zinc-400 font-bold">IDLE</span>
-            <div className="col-span-3 flex justify-end text-zinc-600 font-bold uppercase text-[9px] tracking-widest gap-1 pr-1.5">
-              <Sparkles size={10} /> Copilot
+            <span className="col-span-2 text-center text-zinc-400">{isWindowOpen("ai-assistant") ? "1.8%" : "0.0%"}</span>
+            <span className={`col-span-2 text-center font-bold ${isWindowOpen("ai-assistant") ? "text-green-500" : "text-red-500"}`}>
+              {isWindowOpen("ai-assistant") ? "RUNNING" : "STOPPED"}
+            </span>
+            <div className="col-span-3 flex justify-end text-zinc-500 font-bold uppercase text-[9px] gap-1 pr-1.5">
+              {isWindowOpen("ai-assistant") ? (
+                <button 
+                  onClick={() => {
+                    playBeep(300, "sawtooth", 0.05);
+                    closeWindow("ai-assistant");
+                  }}
+                  className="text-red-400 hover:text-red-300 font-bold hover:underline"
+                >
+                  End Task
+                </button>
+              ) : (
+                <span className="text-zinc-600 flex items-center gap-1"><Sparkles size={10} /> Idle</span>
+              )}
+            </div>
+          </div>
+
+          {/* Item 6: Snake */}
+          <div className="grid grid-cols-12 items-center px-4 py-2 text-[11px]">
+            <span className="col-span-5 font-bold flex items-center gap-1.5 text-zinc-300">
+              <span className={`w-1.5 h-1.5 rounded-full ${isWindowOpen("snake-window") ? "bg-green-500" : "bg-red-500"}`} />
+              snake.exe
+            </span>
+            <span className="col-span-2 text-center text-zinc-400">{isWindowOpen("snake-window") ? "8.6%" : "0.0%"}</span>
+            <span className={`col-span-2 text-center font-bold ${isWindowOpen("snake-window") ? "text-green-500" : "text-red-500"}`}>
+              {isWindowOpen("snake-window") ? "RUNNING" : "STOPPED"}
+            </span>
+            <div className="col-span-3 flex justify-end text-zinc-500 font-bold uppercase text-[9px] gap-1 pr-1.5">
+              {isWindowOpen("snake-window") ? (
+                <button 
+                  onClick={() => {
+                    playBeep(300, "sawtooth", 0.05);
+                    closeWindow("snake-window");
+                  }}
+                  className="text-red-400 hover:text-red-300 font-bold hover:underline"
+                >
+                  End Task
+                </button>
+              ) : (
+                <span className="text-zinc-600 flex items-center gap-1"><Gamepad2 size={10} /> Idle</span>
+              )}
+            </div>
+          </div>
+
+          {/* Item 7: BugDodge */}
+          <div className="grid grid-cols-12 items-center px-4 py-2 text-[11px]">
+            <span className="col-span-5 font-bold flex items-center gap-1.5 text-zinc-300">
+              <span className={`w-1.5 h-1.5 rounded-full ${isWindowOpen("bugdodge-window") ? "bg-green-500" : "bg-red-500"}`} />
+              bugdodge.exe
+            </span>
+            <span className="col-span-2 text-center text-zinc-400">{isWindowOpen("bugdodge-window") ? "12.4%" : "0.0%"}</span>
+            <span className={`col-span-2 text-center font-bold ${isWindowOpen("bugdodge-window") ? "text-green-500" : "text-red-500"}`}>
+              {isWindowOpen("bugdodge-window") ? "RUNNING" : "STOPPED"}
+            </span>
+            <div className="col-span-3 flex justify-end text-zinc-500 font-bold uppercase text-[9px] gap-1 pr-1.5">
+              {isWindowOpen("bugdodge-window") ? (
+                <button 
+                  onClick={() => {
+                    playBeep(300, "sawtooth", 0.05);
+                    closeWindow("bugdodge-window");
+                  }}
+                  className="text-red-400 hover:text-red-300 font-bold hover:underline"
+                >
+                  End Task
+                </button>
+              ) : (
+                <span className="text-zinc-600 flex items-center gap-1"><Coffee size={10} /> Idle</span>
+              )}
+            </div>
+          </div>
+
+          {/* Item 8: Paint */}
+          <div className="grid grid-cols-12 items-center px-4 py-2 text-[11px]">
+            <span className="col-span-5 font-bold flex items-center gap-1.5 text-zinc-300">
+              <span className={`w-1.5 h-1.5 rounded-full ${isWindowOpen("paint-window") ? "bg-green-500" : "bg-red-500"}`} />
+              paint.exe
+            </span>
+            <span className="col-span-2 text-center text-zinc-400">{isWindowOpen("paint-window") ? "4.1%" : "0.0%"}</span>
+            <span className={`col-span-2 text-center font-bold ${isWindowOpen("paint-window") ? "text-green-500" : "text-red-500"}`}>
+              {isWindowOpen("paint-window") ? "RUNNING" : "STOPPED"}
+            </span>
+            <div className="col-span-3 flex justify-end text-zinc-500 font-bold uppercase text-[9px] gap-1 pr-1.5">
+              {isWindowOpen("paint-window") ? (
+                <button 
+                  onClick={() => {
+                    playBeep(300, "sawtooth", 0.05);
+                    closeWindow("paint-window");
+                  }}
+                  className="text-red-400 hover:text-red-300 font-bold hover:underline"
+                >
+                  End Task
+                </button>
+              ) : (
+                <span className="text-zinc-600 flex items-center gap-1"><Palette size={10} /> Idle</span>
+              )}
             </div>
           </div>
         </div>

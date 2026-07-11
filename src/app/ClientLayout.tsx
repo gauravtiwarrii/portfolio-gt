@@ -19,6 +19,9 @@ const TaskManager = dynamic(() => import("@/components/os/TaskManager"), { ssr: 
 const PipelineSimulator = dynamic(() => import("@/components/os/PipelineSimulator"), { ssr: false });
 const TerminalWindow = dynamic(() => import("@/components/os/TerminalWindow"), { ssr: false });
 const OSWindow = dynamic(() => import("@/components/os/OSWindow"), { ssr: false });
+const Snake = dynamic(() => import("@/components/os/Snake"), { ssr: false });
+const BugDodge = dynamic(() => import("@/components/os/BugDodge"), { ssr: false });
+const Paint = dynamic(() => import("@/components/os/Paint"), { ssr: false });
 const RecruiterMode = dynamic(() => import("@/components/modes/RecruiterMode"), { ssr: false });
 
 function LayoutInner({ children }: { children: React.ReactNode }) {
@@ -67,6 +70,12 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
         return <AIAssistantChat />;
       case "terminal-window":
         return <TerminalWindow isWindowMode={true} />;
+      case "snake-window":
+        return <Snake />;
+      case "bugdodge-window":
+        return <BugDodge />;
+      case "paint-window":
+        return <Paint />;
       default:
         return null;
     }
@@ -119,8 +128,24 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
                   onMinimize={() => minimizeWindow(win.id)}
                   onMaximize={() => maximizeWindow(win.id)}
                   onFocus={() => focusWindow(win.id)}
-                  width={win.id === "terminal-window" ? "750px" : win.id === "task-manager" ? "620px" : win.id === "ai-assistant" ? "420px" : "800px"}
-                  height={win.id === "terminal-window" ? "450px" : win.id === "task-manager" ? "480px" : win.id === "ai-assistant" ? "520px" : "600px"}
+                  width={
+                    win.id === "terminal-window" ? "750px" : 
+                    win.id === "task-manager" ? "620px" : 
+                    win.id === "ai-assistant" ? "420px" : 
+                    win.id === "snake-window" ? "440px" : 
+                    win.id === "bugdodge-window" ? "400px" : 
+                    win.id === "paint-window" ? "520px" : 
+                    "800px"
+                  }
+                  height={
+                    win.id === "terminal-window" ? "450px" : 
+                    win.id === "task-manager" ? "530px" : 
+                    win.id === "ai-assistant" ? "520px" : 
+                    win.id === "snake-window" ? "520px" : 
+                    win.id === "bugdodge-window" ? "480px" : 
+                    win.id === "paint-window" ? "450px" : 
+                    "600px"
+                  }
                 >
                   {renderWindowContent(win.id)}
                 </OSWindow>
