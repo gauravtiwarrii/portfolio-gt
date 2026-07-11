@@ -4,6 +4,27 @@ import { useEffect, useState, useRef } from "react";
 import { useSound } from "@/components/effects/useSound";
 import { Play, Pause, AlertTriangle, Cpu } from "lucide-react";
 
+const KafkaIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" fill="#10B981" />
+    <path d="M12 7V17M12 17L8 13M12 17L16 13" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const SparkIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" fill="#EF4444" />
+    <path d="M13 3L5 12H12L11 21L19 12H12L13 3Z" fill="white" />
+  </svg>
+);
+
+const SnowflakeIcon = () => (
+  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2V22M2 12H22M12 12L5 5M12 12L19 19M12 12L5 19M12 12L19 5" stroke="#22D3EE" strokeWidth="2" strokeLinecap="round" />
+    <path d="M12 5L9 8M12 5L15 8M12 19L9 16M12 19L15 16M5 12L8 9M5 12L8 15M22 12L19 9M22 12L19 15" stroke="#22D3EE" strokeWidth="2" strokeLinecap="round" />
+  </svg>
+);
+
 export default function PipelineSimulator() {
   const { playWarning } = useSound();
   
@@ -201,7 +222,7 @@ export default function PipelineSimulator() {
               boxShadow: "0 0 10px var(--gt-glow)"
             }}
           >
-            📥
+            <KafkaIcon />
           </div>
           <span className="text-[9px] font-bold">Kafka</span>
         </div>
@@ -224,7 +245,7 @@ export default function PipelineSimulator() {
               boxShadow: backpressure === "CRITICAL" ? "0 0 15px rgba(239,68,68,0.4)" : "none"
             }}
           >
-            <Cpu size={12} />
+            <SparkIcon />
           </div>
           <span className="text-[9px] font-bold">Spark</span>
         </div>
@@ -246,7 +267,7 @@ export default function PipelineSimulator() {
               background: "color-mix(in srgb, var(--gt-primary) 10%, transparent)",
             }}
           >
-            ❄️
+            <SnowflakeIcon />
           </div>
           <span className="text-[9px] font-bold">Snowflake</span>
         </div>

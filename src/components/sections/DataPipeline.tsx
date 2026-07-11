@@ -2,12 +2,48 @@
 
 import { motion } from "framer-motion";
 
+const KafkaIcon = () => (
+  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" fill="#10B981" />
+    <path d="M12 7V17M12 17L8 13M12 17L16 13" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const SparkIcon = () => (
+  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" fill="#EF4444" />
+    <path d="M13 3L5 12H12L11 21L19 12H12L13 3Z" fill="white" />
+  </svg>
+);
+
+const TransformIcon = () => (
+  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="20" height="20" x="2" y="2" rx="4" fill="#3B82F6" />
+    <path d="M16 12C16 14.2091 14.2091 16 12 16C10.7416 16 9.6192 15.4194 8.87784 14.5M8 12C8 9.79086 9.79086 8 12 8C13.2584 8 14.3808 8.58058 15.1222 9.5M16 7V10H13M8 17V14H11" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const SnowflakeIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2V22M2 12H22M12 12L5 5M12 12L19 19M12 12L5 19M12 12L19 5" stroke="#22D3EE" strokeWidth="2" strokeLinecap="round" />
+    <path d="M12 5L9 8M12 5L15 8M12 19L9 16M12 19L15 16M5 12L8 9M5 12L8 15M22 12L19 9M22 12L19 15" stroke="#22D3EE" strokeWidth="2" strokeLinecap="round" />
+  </svg>
+);
+
+const PowerBIIcon = () => (
+  <svg className="w-5.5 h-5.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="13" width="4.5" height="7" rx="1" fill="#F2C811" />
+    <rect x="9.75" y="8" width="4.5" height="12" rx="1" fill="#F2A104" />
+    <rect x="15.5" y="4" width="4.5" height="16" rx="1" fill="#E61C5D" />
+  </svg>
+);
+
 const PIPELINE_STAGES = [
-  { id: "kafka", label: "Kafka", desc: "Event Ingestion", icon: "⬇" },
-  { id: "spark", label: "Spark Streaming", desc: "Processing", icon: "⚡" },
-  { id: "transform", label: "Transform", desc: "Clean & Enrich", icon: "🔄" },
-  { id: "snowflake", label: "Snowflake", desc: "Data Warehouse", icon: "❄️" },
-  { id: "powerbi", label: "Power BI", desc: "Visualization", icon: "📊" },
+  { id: "kafka", label: "Kafka", desc: "Event Ingestion", icon: <KafkaIcon /> },
+  { id: "spark", label: "Spark Streaming", desc: "Processing", icon: <SparkIcon /> },
+  { id: "transform", label: "Transform", desc: "Clean & Enrich", icon: <TransformIcon /> },
+  { id: "snowflake", label: "Snowflake", desc: "Data Warehouse", icon: <SnowflakeIcon /> },
+  { id: "powerbi", label: "Power BI", desc: "Visualization", icon: <PowerBIIcon /> },
 ];
 
 const PACKET_DURATION = 2.5;
