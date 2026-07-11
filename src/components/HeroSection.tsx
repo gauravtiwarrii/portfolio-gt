@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Github, Linkedin, Mail, Download, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import Desktop from "@/components/os/Desktop";
 
 const ROLES = [
   "Data Engineer",
@@ -34,6 +35,9 @@ export default function HeroSection() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ background: "var(--gt-bg)" }}
     >
+      {/* Desktop shortcuts */}
+      <Desktop />
+
       {/* Ambient Glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full pointer-events-none"

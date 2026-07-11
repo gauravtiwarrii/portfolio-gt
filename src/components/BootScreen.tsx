@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSound } from "@/components/effects/useSound";
 
 const BOOT_LINES = [
   { text: "Initializing Kernel...", delay: 300 },
@@ -25,6 +26,7 @@ const ASCII_LOGO = `
 `;
 
 export default function BootScreen({ onComplete }: { onComplete: () => void }) {
+  const { playChime } = useSound();
   const [isVisible, setIsVisible] = useState(true);
   const [lines, setLines] = useState<string[]>([]);
   const [progress, setProgress] = useState(0);
@@ -35,13 +37,14 @@ export default function BootScreen({ onComplete }: { onComplete: () => void }) {
 
   const finishBoot = useCallback(() => {
     if (phase === "done") return;
+    playChime();
     setPhase("done");
     setProgress(100);
     setTimeout(() => {
       setIsVisible(false);
       setTimeout(onComplete, 600);
     }, 800);
-  }, [onComplete, phase]);
+  }, [onComplete, phase, playChime]);
 
   const skipBoot = useCallback(() => {
     skipRef.current = true;

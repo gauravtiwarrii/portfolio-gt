@@ -10,6 +10,12 @@ interface ThemeContextType {
   isRecruiterMode: boolean;
   toggleRecruiterMode: () => void;
   allThemes: ThemeDefinition[];
+  showMatrixRain: boolean;
+  setShowMatrixRain: (val: boolean) => void;
+  showCrt: boolean;
+  setShowCrt: (val: boolean) => void;
+  isMuted: boolean;
+  setIsMuted: (val: boolean) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
@@ -36,16 +42,25 @@ function applyThemeToDOM(theme: ThemeDefinition) {
 
 const STORAGE_KEY_THEME = "gt-os-theme";
 const STORAGE_KEY_RECRUITER = "gt-os-recruiter";
+const STORAGE_KEY_MATRIX = "gt-os-matrix";
+const STORAGE_KEY_CRT = "gt-os-crt";
+const STORAGE_KEY_MUTE = "gt-os-mute";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [themeId, setThemeId] = useState(DEFAULT_THEME_ID);
   const [isRecruiterMode, setIsRecruiterMode] = useState(false);
+  const [showMatrixRain, setShowMatrixRainState] = useState(true);
+  const [showCrt, setShowCrtState] = useState(true);
+  const [isMuted, setIsMutedState] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   // Load persisted theme on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem(STORAGE_KEY_THEME);
     const savedRecruiter = localStorage.getItem(STORAGE_KEY_RECRUITER);
+    const savedMatrix = localStorage.getItem(STORAGE_KEY_MATRIX);
+    const savedCrt = localStorage.getItem(STORAGE_KEY_CRT);
+    const savedMute = localStorage.getItem(STORAGE_KEY_MUTE);
 
     setTimeout(() => {
       if (savedTheme && themes.find((t) => t.id === savedTheme)) {
@@ -53,6 +68,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       }
       if (savedRecruiter === "true") {
         setIsRecruiterMode(true);
+      }
+      if (savedMatrix === "false") {
+        setShowMatrixRainState(false);
+      }
+      if (savedCrt === "false") {
+        setShowCrtState(false);
+      }
+      if (savedMute === "true") {
+        setIsMutedState(true);
       }
       setMounted(true);
     }, 0);
@@ -83,6 +107,21 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
+  const setShowMatrixRain = useCallback((val: boolean) => {
+    setShowMatrixRainState(val);
+    localStorage.setItem(STORAGE_KEY_MATRIX, String(val));
+  }, []);
+
+  const setShowCrt = useCallback((val: boolean) => {
+    setShowCrtState(val);
+    localStorage.setItem(STORAGE_KEY_CRT, String(val));
+  }, []);
+
+  const setIsMuted = useCallback((val: boolean) => {
+    setIsMutedState(val);
+    localStorage.setItem(STORAGE_KEY_MUTE, String(val));
+  }, []);
+
   const activeTheme = isRecruiterMode
     ? recruiterTheme
     : themes.find((t) => t.id === themeId) || themes[0];
@@ -96,6 +135,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         isRecruiterMode,
         toggleRecruiterMode,
         allThemes: themes,
+        showMatrixRain,
+        setShowMatrixRain,
+        showCrt,
+        setShowCrt,
+        isMuted,
+        setIsMuted,
       }}
     >
       <div style={!mounted ? { visibility: "hidden" } : undefined}>

@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { ThemeProvider, useTheme } from "@/components/providers/ThemeProvider";
-import { WindowManagerProvider } from "@/components/os/WindowManager";
+import { WindowManagerProvider, useWindowManager } from "@/components/os/WindowManager";
 import BootScreen from "@/components/BootScreen";
 import Taskbar from "@/components/os/Taskbar";
 import CodeRainBackground from "@/components/effects/CodeRainBackground";
@@ -14,13 +14,17 @@ import Footer from "@/components/Footer";
 import dynamic from "next/dynamic";
 
 const AIAssistant = dynamic(() => import("@/components/os/AIAssistant"), { ssr: false });
+const AIAssistantChat = dynamic(() => import("@/components/os/AIAssistant").then(m => m.AIAssistantChat), { ssr: false });
+const TaskManager = dynamic(() => import("@/components/os/TaskManager"), { ssr: false });
+const PipelineSimulator = dynamic(() => import("@/components/os/PipelineSimulator"), { ssr: false });
+const TerminalWindow = dynamic(() => import("@/components/os/TerminalWindow"), { ssr: false });
+const OSWindow = dynamic(() => import("@/components/os/OSWindow"), { ssr: false });
 const RecruiterMode = dynamic(() => import("@/components/modes/RecruiterMode"), { ssr: false });
-
-
 
 function LayoutInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { isRecruiterMode } = useTheme();
+  const { isRecruiterMode, showMatrixRain, showCrt } = useTheme();
+  const { windows, closeWindow, minimizeWindow, maximizeWindow, focusWindow } = useWindowManager();
   const [booted, setBooted] = useState(false);
   const [skipBoot, setSkipBoot] = useState(false);
 
@@ -53,6 +57,21 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  const renderWindowContent = (id: string) => {
+    switch (id) {
+      case "task-manager":
+        return <TaskManager />;
+      case "pipeline-simulator":
+        return <PipelineSimulator />;
+      case "ai-assistant":
+        return <AIAssistantChat />;
+      case "terminal-window":
+        return <TerminalWindow isWindowMode={true} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       {/* Boot Screen */}
@@ -61,7 +80,7 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
       {/* Background Effects — hidden in recruiter mode */}
       {!isRecruiterMode && (
         <>
-          <CodeRainBackground />
+          {showMatrixRain && <CodeRainBackground />}
           <MouseSpotlight />
           {/* Tech grid overlay */}
           <div
@@ -73,15 +92,43 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
       )}
 
       {/* CRT Scanlines */}
-      {!isRecruiterMode && (
+      {!isRecruiterMode && showCrt && (
         <div className="fixed inset-0 pointer-events-none z-[2] crt-scanlines opacity-20" aria-hidden="true" />
       )}
 
       {/* Taskbar */}
       {booted && <Taskbar />}
 
-      {/* AI Assistant */}
+      {/* AI Assistant Floating Button */}
       {booted && !isRecruiterMode && <AIAssistant />}
+
+      {/* Active OS Windows */}
+      {booted && !isRecruiterMode && (
+        <div className="fixed inset-0 pointer-events-none z-[150]">
+          {windows.map((win) => {
+            if (!win.isOpen || win.isMinimized) return null;
+            return (
+              <div key={win.id} className="pointer-events-auto">
+                <OSWindow
+                  id={win.id}
+                  title={win.title}
+                  isOpen={win.isOpen}
+                  isMaximized={win.isMaximized}
+                  zIndex={win.zIndex}
+                  onClose={() => closeWindow(win.id)}
+                  onMinimize={() => minimizeWindow(win.id)}
+                  onMaximize={() => maximizeWindow(win.id)}
+                  onFocus={() => focusWindow(win.id)}
+                  width={win.id === "terminal-window" ? "750px" : win.id === "task-manager" ? "620px" : win.id === "ai-assistant" ? "420px" : "800px"}
+                  height={win.id === "terminal-window" ? "450px" : win.id === "task-manager" ? "480px" : win.id === "ai-assistant" ? "520px" : "600px"}
+                >
+                  {renderWindowContent(win.id)}
+                </OSWindow>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* Main Content */}
       <AnimatePresence mode="wait">
