@@ -1,19 +1,9 @@
 import Link from "next/link";
-import { ArrowDown, Download } from "lucide-react";
+import { ArrowDown, ArrowDownRight, Download } from "lucide-react";
 import ArchitectureGraph from "@/components/systems/ArchitectureGraph";
-import { HERO_FLOW, RESUMES, SITE } from "@/data/site";
+import { HERO_FLOW, RESUMES } from "@/data/site";
 
-const resume = RESUMES.find((r) => r.available);
-
-const STACK = [
-  "Python",
-  "TypeScript",
-  "SQL",
-  "Next.js",
-  "PostgreSQL",
-  "Kafka",
-  "Spark",
-];
+const resumes = RESUMES.filter((resume) => resume.available);
 
 /* The only choreographed entrance on the page. Everything below the
    fold arrives on scroll or not at all. */
@@ -22,11 +12,11 @@ const step = (i: number) => ({ animationDelay: `${60 * i}ms` });
 export default function Hero() {
   return (
     <section className="section section--flush hero-stage" aria-labelledby="hero-title">
-      <div className="shell hero-shell grid items-start gap-14 pt-[128px] md:pt-[152px] lg:grid-cols-12 lg:gap-10 lg:pt-[168px]">
+      <div className="shell hero-shell grid min-h-[min(900px,100svh)] content-start items-center gap-12 pb-16 pt-[132px] md:pb-20 md:pt-[152px] lg:grid-cols-12 lg:content-center lg:gap-10 lg:pt-[168px]">
         <div className="lg:col-span-7">
           <p className="eyebrow hero-kicker reveal" style={step(0)}>
-            <span className="hero-badge">GT</span>
-            Gaurav Tiwari <span aria-hidden="true">/</span> 2027
+            <span className="hero-badge">GT / 2026</span>
+            Engineering workspace <span aria-hidden="true">/</span> 001
           </p>
 
           <h1
@@ -34,15 +24,17 @@ export default function Hero() {
             className="hero-title reveal mt-7 font-medium"
             style={step(1)}
           >
-            I build systems that turn <em>complex</em> problems into simple products.
+            I BUILD<br />
+            SOFTWARE<br />
+            <em>SYSTEMS.</em>
           </h1>
 
           <p className="eyebrow reveal mt-8" style={step(2)}>
-            Software Engineer · Data Engineer · AI Systems Builder
+            Software engineering <span aria-hidden="true">/</span> Data engineering <span aria-hidden="true">/</span> AI systems
           </p>
 
           <p className="lede reveal mt-5 max-w-[52ch]" style={step(3)}>
-            Full-stack applications, data platforms, distributed systems and AI
+            Full-stack products, data platforms, distributed systems and AI
             workflows engineered end-to-end.
           </p>
 
@@ -51,65 +43,43 @@ export default function Hero() {
             style={step(4)}
           >
             <Link href="/#work" className="btn btn--primary">
-              View Work
-              <ArrowDown size={15} aria-hidden="true" />
+              Explore selected work
+              <ArrowDownRight size={15} aria-hidden="true" />
             </Link>
-            {resume && (
+            {resumes.map((resume) => (
               <a
+                key={resume.href}
                 href={resume.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn--secondary"
+                aria-label={`Open ${resume.label}`}
+                className="hero-resume-link mono"
               >
                 <Download size={15} aria-hidden="true" />
-                Download Resume
+                {resume.label.replace(" Resume", "")}
               </a>
-            )}
-            <span aria-hidden="true" className="mx-1 h-5 w-px bg-line-strong" />
-            <a
-              href={SITE.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link text-sm text-fg-muted"
-            >
-              GitHub
-            </a>
-            <a
-              href={SITE.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link text-sm text-fg-muted"
-            >
-              LinkedIn
-            </a>
-          </div>
-
-          <ul
-            className="reveal mt-14 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-5"
-            style={step(5)}
-          >
-            {STACK.map((tech, i) => (
-              <li key={tech} className="mono flex items-center gap-3 text-xs text-fg-faint">
-                {i > 0 && <span aria-hidden="true">·</span>}
-                {tech}
-              </li>
             ))}
-          </ul>
+          </div>
         </div>
 
-        <div className="reveal hero-visual lg:col-span-5 lg:pt-8" style={step(6)}>
-          <div className="hero-ring" aria-hidden="true" />
+        <div className="reveal hero-visual lg:col-span-5 lg:pt-8" style={step(5)}>
           <ArchitectureGraph
             nodes={HERO_FLOW}
-            title="Request path"
+            title="System / request path"
             unit="layers"
             split={false}
             className="hero-graph"
           />
           <p className="meta mt-3 pl-1">
-            The shape most of these systems share. Select a layer.
+            A working model. Select a layer to inspect its boundary.
           </p>
         </div>
+
+        <a href="#work" className="hero-scroll mono lg:col-span-12" aria-label="Scroll to selected work">
+          <span className="hero-scroll__line" aria-hidden="true" />
+          Scroll to explore
+          <ArrowDown size={13} aria-hidden="true" />
+        </a>
       </div>
     </section>
   );

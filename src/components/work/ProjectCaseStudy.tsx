@@ -45,11 +45,14 @@ export default function ProjectCaseStudy({ project, index }: Props) {
 
           <h3
             id={`project-${project.slug}`}
-            className="project-title mt-5 text-[clamp(1.75rem,3.4vw,2.6rem)] font-medium tracking-[-0.025em]"
+            className="project-title mt-5 text-[2rem] font-medium md:text-[3rem] xl:text-[3.5rem]"
           >
             {project.title}
           </h3>
-          <p className="mt-3 max-w-[54ch] text-[1.0625rem] leading-relaxed text-fg-muted">
+          <p className="project-subtitle mt-3 max-w-[54ch] text-[1.125rem] leading-relaxed text-fg">
+            {project.subtitle}
+          </p>
+          <p className="mt-3 max-w-[54ch] text-[0.9375rem] leading-relaxed text-fg-muted">
             {project.description}
           </p>
         </div>
@@ -154,9 +157,10 @@ export default function ProjectCaseStudy({ project, index }: Props) {
           {project.flow && project.flow.length > 0 && (
             <ArchitectureGraph
               nodes={project.flow}
-              title="Flow"
+              title={`${project.category} / flow`}
               unit="stages"
               split={false}
+              className="project-architecture"
             />
           )}
 
@@ -198,6 +202,7 @@ export default function ProjectCaseStudy({ project, index }: Props) {
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
+            data-cursor="open ↗"
             className="inline-flex items-center gap-2 text-sm text-fg-muted transition-colors duration-150 hover:text-fg"
           >
             <Github size={14} aria-hidden="true" />
@@ -210,6 +215,7 @@ export default function ProjectCaseStudy({ project, index }: Props) {
             href={project.demo}
             target="_blank"
             rel="noopener noreferrer"
+            data-cursor="open ↗"
             className="inline-flex items-center gap-2 text-sm text-fg-muted transition-colors duration-150 hover:text-fg"
           >
             <ArrowUpRight size={14} aria-hidden="true" />

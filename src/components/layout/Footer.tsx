@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { NAV_LINKS, RESUMES, SITE } from "@/data/site";
 
-const resume = RESUMES.find((r) => r.available);
+const resumes = RESUMES.filter((resume) => resume.available);
 
 export default function Footer() {
   return (
@@ -76,18 +76,18 @@ export default function Footer() {
                   Email
                 </a>
               </li>
-              {resume && (
-                <li>
+              {resumes.map((resume) => (
+                <li key={resume.href}>
                   <a
                     href={resume.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm text-fg-muted transition-colors duration-150 hover:text-fg"
                   >
-                    Resume
+                    {resume.label}
                   </a>
                 </li>
-              )}
+              ))}
             </ul>
           </div>
         </div>

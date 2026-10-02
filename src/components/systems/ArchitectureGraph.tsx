@@ -108,7 +108,7 @@ export default function ArchitectureGraph({
       <p className="mono text-[0.625rem] uppercase tracking-[0.18em] text-fg-faint">
         {node.role}
       </p>
-      <p className="mt-2.5 text-[1.0625rem] font-medium tracking-[-0.015em]">
+      <p className="mt-2.5 text-[1.0625rem] font-medium">
         {node.label}
       </p>
       <p className="mt-2 max-w-[46ch] text-sm leading-relaxed text-fg-muted">

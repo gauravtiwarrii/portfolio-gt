@@ -105,7 +105,7 @@ export default function Cursor() {
 
   if (!enabled) return null;
 
-  const size = mode === "label" ? 64 : mode === "interactive" ? 34 : 22;
+  const size = mode === "label" ? 64 : mode === "interactive" ? 24 : 6;
 
   return (
     <div
@@ -119,10 +119,9 @@ export default function Cursor() {
           width: size,
           height: size,
           opacity: visible ? 1 : 0,
-          borderColor:
-            mode === "idle" ? "var(--line-strong)" : "var(--accent-wire)",
+          borderColor: mode === "idle" ? "var(--accent)" : "var(--accent-wire)",
           backgroundColor:
-            mode === "label" ? "var(--accent-wash)" : "transparent",
+            mode === "label" ? "var(--accent-wash)" : mode === "idle" ? "var(--accent)" : "transparent",
           transitionTimingFunction: "var(--ease)",
         }}
       >

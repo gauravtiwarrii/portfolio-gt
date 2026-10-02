@@ -27,7 +27,7 @@ export default function ProjectsPage() {
     <div className="shell pb-32 pt-[128px] md:pt-[152px]">
       <header className="max-w-[64ch] border-b border-line pb-12">
         <p className="eyebrow">Index</p>
-        <h1 className="mt-6 text-[clamp(2.25rem,5vw,3.75rem)] font-medium leading-[1.05] tracking-[-0.03em]">
+        <h1 className="mt-6 text-[2.5rem] font-medium leading-[1.05] md:text-[3rem] xl:text-[3.75rem]">
           Everything I&apos;ve built.
         </h1>
         <p className="lede mt-6">
@@ -51,7 +51,7 @@ export default function ProjectsPage() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h2 className="text-[1.375rem] font-medium tracking-[-0.02em] transition-colors duration-200 group-hover:text-accent md:text-[1.625rem]">
+                  <h2 className="text-[1.375rem] font-medium transition-colors duration-200 group-hover:text-accent md:text-[1.625rem]">
                     {project.title}
                   </h2>
                   <p className="mono mt-2 text-[0.6875rem] uppercase tracking-[0.14em] text-fg-faint">

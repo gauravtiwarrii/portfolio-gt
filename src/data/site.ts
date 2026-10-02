@@ -26,9 +26,7 @@ export const NAV_LINKS = [
 
 /* ───────────────────────────────────────────────────────────────
    Résumés
-   Both engineering directions are supported. A résumé only renders
-   when its file exists in /public — drop the second PDF in and set
-   `available: true` to light up the button. No dead links.
+  Each download is enabled only while its matching public PDF exists.
    ─────────────────────────────────────────────────────────────── */
 export const RESUMES = [
   {
@@ -41,7 +39,7 @@ export const RESUMES = [
     label: "Data Engineer Resume",
     href: "/resume-data-engineer.pdf",
     note: "Pipelines, warehousing and streaming",
-    available: false,
+    available: true,
   },
 ] as const;
 

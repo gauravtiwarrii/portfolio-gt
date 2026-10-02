@@ -28,8 +28,6 @@ type Action = {
   external?: boolean;
 };
 
-const resume = RESUMES.find((r) => r.available);
-
 const open = (url: string) => window.open(url, "_blank", "noopener,noreferrer");
 
 const BASE_ACTIONS: Action[] = [
@@ -38,19 +36,17 @@ const BASE_ACTIONS: Action[] = [
   { id: "systems", label: "Data Systems", group: "Navigate", keywords: "pipeline kafka spark", icon: Layers, run: (r) => r.push("/#systems") },
   { id: "about", label: "About", group: "Navigate", keywords: "education background", icon: User, run: (r) => r.push("/#about") },
   { id: "contact", label: "Contact", group: "Navigate", keywords: "email hire message", icon: Mail, run: (r) => r.push("/#contact") },
-  ...(resume
-    ? [
-        {
-          id: "resume",
-          label: "Download Resume",
-          group: "Profile",
-          keywords: "cv pdf",
-          icon: Download,
-          run: () => open(resume.href),
-          external: true,
-        } satisfies Action,
-      ]
-    : []),
+  ...RESUMES.filter((resume) => resume.available).map(
+    (resume): Action => ({
+      id: `resume-${resume.label.toLowerCase().replaceAll(" ", "-")}`,
+      label: resume.label,
+      group: "Profile",
+      keywords: "cv resume pdf",
+      icon: Download,
+      run: () => open(resume.href),
+      external: true,
+    }),
+  ),
   { id: "github", label: "GitHub", group: "Profile", keywords: "code repositories source", icon: Github, run: () => open(SITE.github), external: true },
   { id: "linkedin", label: "LinkedIn", group: "Profile", keywords: "profile network", icon: Linkedin, run: () => open(SITE.linkedin), external: true },
   { id: "email", label: `Email ${SITE.email}`, group: "Profile", keywords: "mail contact", icon: Mail, run: () => { window.location.href = `mailto:${SITE.email}`; }, external: true },
@@ -71,15 +67,10 @@ export default function CommandPalette() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState(0);
-  const [isMac, setIsMac] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const restoreRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    setIsMac(/Mac|iPhone|iPad/.test(navigator.userAgent));
-  }, []);
 
   const close = useCallback(() => {
     setIsOpen(false);
@@ -131,10 +122,6 @@ export default function CommandPalette() {
     );
   }, [query]);
 
-  useEffect(() => {
-    setIndex(0);
-  }, [query]);
-
   /* Keep the highlighted row in view when driving with the keyboard. */
   useEffect(() => {
     if (!isOpen) return;
@@ -154,23 +141,7 @@ export default function CommandPalette() {
     [results, index, close, router]
   );
 
-  if (!isOpen) {
-    return (
-      /* Discoverability: a hint that is also the trigger. */
-      <button
-        type="button"
-        onClick={show}
-        aria-keyshortcuts="Meta+K Control+K"
-        className="mono fixed bottom-5 right-5 z-40 hidden items-center gap-2 rounded border border-line bg-surface/80 px-3 py-2 text-[0.6875rem] text-fg-faint backdrop-blur-md transition-colors duration-150 hover:border-line-strong hover:text-fg-muted lg:flex"
-      >
-        <Search size={12} aria-hidden="true" />
-        <span>{isMac ? "⌘" : "Ctrl"} K</span>
-        <span className="sr-only">Open command palette</span>
-      </button>
-    );
-  }
-
-  let lastGroup = "";
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[90] flex items-start justify-center px-4 pt-[12vh]">
@@ -209,7 +180,10 @@ export default function CommandPalette() {
           <input
             ref={inputRef}
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setIndex(0);
+            }}
             placeholder="Search sections, case studies and links"
             aria-label="Search commands"
             aria-controls="palette-results"
@@ -232,8 +206,7 @@ export default function CommandPalette() {
           )}
 
           {results.map((action, i) => {
-            const header = action.group !== lastGroup ? action.group : null;
-            lastGroup = action.group;
+            const header = results[i - 1]?.group !== action.group ? action.group : null;
             const Icon = action.icon;
             const selected = i === index;
             return (

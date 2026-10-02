@@ -195,7 +195,7 @@ function Stat({
       </dt>
       <dd className="mt-3">
         {typeof value === "number" ? (
-          <span className="mono text-[1.75rem] font-medium leading-none tracking-[-0.02em]">
+          <span className="mono text-[1.75rem] font-medium leading-none">
             {value}
           </span>
         ) : (

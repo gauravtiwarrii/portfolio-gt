@@ -27,13 +27,13 @@ export default function ReadingProgress() {
 
     return (
         <motion.div
-            className="fixed top-0 left-0 right-0 h-1.5 bg-white/5 backdrop-blur-md z-50 origin-left"
+            className="fixed top-0 left-0 right-0 h-px bg-line z-50 origin-left"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : -10 }}
             transition={{ duration: 0.3 }}
         >
             <motion.div
-                className="h-full bg-gradient-to-r from-zinc-400 via-zinc-200 to-white shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+                className="h-full bg-accent"
                 style={{ scaleX }}
             />
         </motion.div>

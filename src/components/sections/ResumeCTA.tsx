@@ -22,7 +22,7 @@ export default function ResumeCTA() {
           <div className="lg:col-span-7">
             <h2
               id="resume-title"
-              className="text-[clamp(1.5rem,3vw,2.125rem)] font-medium tracking-[-0.025em]"
+              className="text-[1.5rem] font-medium md:text-[2.125rem]"
             >
               Want the full technical profile?
             </h2>

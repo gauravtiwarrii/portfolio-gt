@@ -64,9 +64,11 @@ export default function ContactConsole() {
             <div className="lg:col-span-5">
               <h2
                 id="contact-title"
-                className="section-title max-w-[20ch] font-medium"
+                className="contact-title font-medium"
               >
-                Let&apos;s build something worth shipping.
+                LET&apos;S BUILD<br />
+                SOMETHING<br />
+                <em>USEFUL.</em>
               </h2>
               <p className="lede mt-5 max-w-[42ch]">
                 Open to software engineering, data engineering and AI systems
@@ -85,6 +87,7 @@ export default function ContactConsole() {
                     <dd>
                       <a
                         href={channel.href}
+                        data-cursor={channel.href.startsWith("http") ? "open ↗" : undefined}
                         {...(channel.href.startsWith("http")
                           ? { target: "_blank", rel: "noopener noreferrer" }
                           : {})}

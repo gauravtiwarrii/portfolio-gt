@@ -3,10 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Github, Linkedin, Menu, X } from "lucide-react";
+import { Github, Linkedin, Menu, Search, X } from "lucide-react";
 import { NAV_LINKS, RESUMES, SITE } from "@/data/site";
 
-const resume = RESUMES.find((r) => r.available);
+const resumes = RESUMES.filter((resume) => resume.available);
 
 /* Section ids the nav tracks on the homepage. Derived from the hrefs so the
    two can never drift apart. */
@@ -100,7 +100,7 @@ export default function Nav() {
             >
               {SITE.monogram}
             </span>
-            <span className="hidden text-[0.9375rem] font-medium tracking-[-0.01em] sm:block">
+            <span className="hidden text-[0.9375rem] font-medium sm:block">
               {SITE.name}
             </span>
           </Link>
@@ -148,10 +148,23 @@ export default function Nav() {
               </p>
             )}
 
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event("command-palette:open"))}
+              aria-label="Open command palette"
+              aria-keyshortcuts="Meta+K Control+K"
+              title="Search commands"
+              className="inline-flex h-9 items-center gap-1.5 px-2 text-fg-faint transition-colors duration-150 hover:text-fg"
+            >
+              <Search size={15} aria-hidden="true" />
+              <span className="mono hidden text-[0.625rem] xl:inline">CTRL / ⌘ K</span>
+            </button>
+
             <a
               href={SITE.github}
               target="_blank"
               rel="noopener noreferrer"
+              data-cursor="open ↗"
               aria-label="GitHub profile"
               className="grid h-9 w-9 place-items-center rounded text-fg-faint transition-colors duration-150 hover:bg-surface-2 hover:text-fg"
             >
@@ -161,21 +174,24 @@ export default function Nav() {
               href={SITE.linkedin}
               target="_blank"
               rel="noopener noreferrer"
+              data-cursor="open ↗"
               aria-label="LinkedIn profile"
               className="grid h-9 w-9 place-items-center rounded text-fg-faint transition-colors duration-150 hover:bg-surface-2 hover:text-fg"
             >
               <Linkedin size={16} aria-hidden="true" />
             </a>
 
-            {resume && (
-              <a
-                href={resume.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ml-2 hidden h-8 items-center rounded border border-line-strong px-3.5 text-[0.8125rem] font-medium transition-colors duration-150 hover:border-fg-faint hover:bg-surface-2 sm:flex"
-              >
-                Resume
-              </a>
+            {resumes.length > 0 && (
+              <details className="resume-menu ml-2 hidden sm:block">
+                <summary aria-label="Choose a resume" className="resume-menu__trigger">Resumes</summary>
+                <div className="resume-menu__options">
+                  {resumes.map((resume) => (
+                    <a key={resume.href} href={resume.href} target="_blank" rel="noopener noreferrer" data-cursor="open ↗">
+                      {resume.label}
+                    </a>
+                  ))}
+                </div>
+              </details>
             )}
 
             <button
@@ -220,7 +236,7 @@ export default function Nav() {
                 <Link
                   href={link.href}
                   onClick={close}
-                  className="flex items-baseline gap-4 py-5 text-2xl font-medium tracking-[-0.02em]"
+                  className="flex items-baseline gap-4 py-5 text-2xl font-medium"
                 >
                   <span className="mono text-[0.6875rem] text-fg-faint">
                     {String(i + 1).padStart(2, "0")}
@@ -232,21 +248,24 @@ export default function Nav() {
           </ul>
 
           <div className="mt-auto flex flex-col gap-4 py-8">
-            {resume && (
+            {resumes.map((resume, index) => (
               <a
+                key={resume.href}
                 href={resume.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn--primary w-full justify-center"
+                data-cursor="open ↗"
+                className={`btn ${index === 0 ? "btn--primary" : "btn--secondary"} w-full justify-center`}
               >
-                Download Resume
+                {resume.label}
               </a>
-            )}
+            ))}
             <div className="flex items-center gap-5">
               <a
                 href={SITE.github}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-cursor="open ↗"
                 className="mono text-xs text-fg-muted"
               >
                 GitHub
@@ -255,6 +274,7 @@ export default function Nav() {
                 href={SITE.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-cursor="open ↗"
                 className="mono text-xs text-fg-muted"
               >
                 LinkedIn

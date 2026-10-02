@@ -63,7 +63,7 @@ export default function Timeline() {
                   className="grid gap-4 border-t border-line pt-6 md:grid-cols-12 md:gap-8"
                 >
                   <div className="md:col-span-3">
-                    <h3 className="mono text-[2rem] font-medium leading-none tracking-[-0.02em] text-fg md:sticky md:top-28">
+                    <h3 className="mono text-[2rem] font-medium leading-none text-fg md:sticky md:top-28">
                       {year}
                       <span className="mono mt-3 block text-[0.6875rem] font-normal tracking-normal text-fg-faint">
                         {entries.length} systems
@@ -113,7 +113,7 @@ export default function Timeline() {
             {/* Education is the one dated fact that isn't a build. */}
             <div className="grid gap-4 border-t border-line pt-6 md:grid-cols-12 md:gap-8">
               <div className="md:col-span-3">
-                <h3 className="mono text-[2rem] font-medium leading-none tracking-[-0.02em] text-fg-faint">
+                <h3 className="mono text-[2rem] font-medium leading-none text-fg-faint">
                   {EDUCATION.graduation}
                   <span className="mono mt-3 block text-[0.6875rem] font-normal tracking-normal text-fg-faint">
                     Expected

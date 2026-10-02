@@ -27,7 +27,7 @@ export default function Philosophy() {
                 <span className="mono text-[0.6875rem] text-fg-faint md:col-span-1">
                   {p.index}
                 </span>
-                <h3 className="text-[1.25rem] font-medium tracking-[-0.02em] md:col-span-4">
+                <h3 className="text-[1.25rem] font-medium md:col-span-4">
                   {p.title}
                 </h3>
                 <p className="max-w-[56ch] text-[0.9375rem] leading-relaxed text-fg-muted md:col-span-7">
