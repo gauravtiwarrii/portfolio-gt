@@ -1,30 +1,42 @@
-import dynamic from "next/dynamic";
-import HeroSection from "@/components/HeroSection";
+import Hero from "@/components/sections/Hero";
+import SelectedWork from "@/components/sections/SelectedWork";
+import DataPipeline from "@/components/sections/DataPipeline";
+import Philosophy from "@/components/sections/Philosophy";
+import SkillGalaxy from "@/components/sections/SkillGalaxy";
+import About from "@/components/sections/About";
+import Timeline from "@/components/sections/Timeline";
+import GitHubSection from "@/components/sections/GitHubSection";
+import ResumeCTA from "@/components/sections/ResumeCTA";
+import ContactConsole from "@/components/sections/ContactConsole";
 
-// Dynamic imports for code splitting — heavy sections load lazily
-const AboutSection = dynamic(() => import("@/components/AboutSection"));
-const DataPipeline = dynamic(() => import("@/components/sections/DataPipeline"));
-const ProjectsGrid = dynamic(() => import("@/components/sections/ProjectsGrid"));
-const SkillGalaxy = dynamic(() => import("@/components/sections/SkillGalaxy"));
-const GitHubSection = dynamic(() => import("@/components/sections/GitHubSection"));
-const Timeline = dynamic(() => import("@/components/sections/Timeline"));
-const CertificatesSection = dynamic(() => import("@/components/sections/CertificatesSection"));
-const ContactConsole = dynamic(() => import("@/components/sections/ContactConsole"));
+/* ───────────────────────────────────────────────────────────────
+   Homepage
+
+   Read top to bottom it argues one case: here is the work, here is
+   how the systems are shaped, here is the method, here is the
+   toolchain, here is the person, here is the record, here is the
+   source. The résumé band sits last because by then there's a
+   reason to want it.
+
+   Static imports throughout. Only three of these ship JavaScript —
+   the technology field, the GitHub reader and the contact form —
+   and each is its own client boundary, so the route's initial
+   payload stays small without hand-managed dynamic() wrappers.
+   ─────────────────────────────────────────────────────────────── */
 
 export default function Home() {
   return (
-    <main>
-      <HeroSection />
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-        <AboutSection />
-        <DataPipeline />
-        <ProjectsGrid />
-        <SkillGalaxy />
-        <GitHubSection />
-        <Timeline />
-        <CertificatesSection />
-        <ContactConsole />
-      </div>
-    </main>
+    <>
+      <Hero />
+      <SelectedWork />
+      <DataPipeline />
+      <Philosophy />
+      <SkillGalaxy />
+      <About />
+      <Timeline />
+      <GitHubSection />
+      <ResumeCTA />
+      <ContactConsole />
+    </>
   );
 }

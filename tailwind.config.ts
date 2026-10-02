@@ -2,7 +2,6 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/data/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,67 +9,78 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        bg: "var(--bg)",
+        surface: {
+          DEFAULT: "var(--surface)",
+          2: "var(--surface-2)",
+          3: "var(--surface-3)",
+        },
+        line: {
+          DEFAULT: "var(--line)",
+          strong: "var(--line-strong)",
+          accent: "var(--line-accent)",
+        },
+        fg: {
+          DEFAULT: "var(--fg)",
+          muted: "var(--fg-muted)",
+          faint: "var(--fg-faint)",
+        },
+        accent: {
+          DEFAULT: "var(--accent)",
+          bright: "var(--accent-bright)",
+          wash: "var(--accent-wash)",
+          wire: "var(--accent-wire)",
+        },
+        ok: "var(--status-ok)",
+
+        /* Legacy gt-* aliases so /about, /blog, /contact and /projects
+           keep compiling until they are migrated in the next pass. */
         gt: {
-          bg: "var(--gt-bg)",
-          fg: "var(--gt-fg)",
-          primary: "var(--gt-primary)",
-          secondary: "var(--gt-secondary)",
-          accent: "var(--gt-accent)",
-          warning: "var(--gt-warning)",
-          danger: "var(--gt-danger)",
-          border: "var(--gt-border)",
-          glow: "var(--gt-glow)",
-          surface: "var(--gt-surface)",
-          "surface-hover": "var(--gt-surface-hover)",
-          muted: "var(--gt-muted)",
-          "muted-fg": "var(--gt-muted-fg)",
+          bg: "var(--bg)",
+          fg: "var(--fg)",
+          primary: "var(--accent)",
+          secondary: "var(--accent-bright)",
+          accent: "var(--accent)",
+          warning: "#e0a030",
+          danger: "#e05555",
+          border: "var(--line)",
+          glow: "var(--accent-wash)",
+          surface: "var(--surface)",
+          "surface-hover": "var(--surface-2)",
+          muted: "var(--surface-3)",
+          "muted-fg": "var(--fg-faint)",
         },
       },
       fontFamily: {
-        sans: ["var(--font-geist)", "var(--font-inter)", "system-ui", "sans-serif"],
-        heading: ["var(--font-space-grotesk)", "var(--font-geist)", "system-ui", "sans-serif"],
-        mono: ["var(--font-jetbrains-mono)", "Courier New", "monospace"],
+        sans: ["var(--font-geist)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontSize: {
+        "2xs": ["0.6875rem", { lineHeight: "1.4", letterSpacing: "0.16em" }],
       },
-      animation: {
-        "blink": "blink 1s step-end infinite",
-        "glow-pulse": "glow-pulse 2s ease-in-out infinite",
-        "float": "float 3s ease-in-out infinite",
-        "shimmer": "shimmer 2s linear infinite",
-        "gradient-shift": "gradient-shift 3s ease infinite",
-        "spin-slow": "spin-slow 20s linear infinite",
-        "pulse-ring": "pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite",
-        "border-glow": "border-glow 2s ease-in-out infinite",
-      },
-      keyframes: {
-        blink: {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0" },
-        },
-        "glow-pulse": {
-          "0%, 100%": {
-            boxShadow: "0 0 5px var(--gt-glow), 0 0 10px var(--gt-glow)",
-          },
-          "50%": {
-            boxShadow: "0 0 15px var(--gt-glow), 0 0 30px var(--gt-glow), 0 0 45px var(--gt-glow)",
-          },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-8px)" },
-        },
+      maxWidth: {
+        page: "var(--page-max)",
       },
       borderRadius: {
-        "os": "12px",
+        DEFAULT: "var(--radius)",
+        lg: "var(--radius-lg)",
       },
-      spacing: {
-        "taskbar": "48px",
+      transitionTimingFunction: {
+        ease: "var(--ease)",
+        "ease-out": "var(--ease-out)",
+      },
+      keyframes: {
+        reveal: {
+          from: { opacity: "0", transform: "translateY(8px)" },
+          to: { opacity: "1", transform: "none" },
+        },
+      },
+      animation: {
+        reveal: "reveal var(--slow) var(--ease) both",
       },
     },
   },
   plugins: [],
 };
+
 export default config;

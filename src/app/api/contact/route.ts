@@ -5,6 +5,15 @@ import path from "path";
 const TO_EMAIL = "igauravtiwari1096@gmail.com";
 const messagesFile = path.join(process.cwd(), "data/messages.json");
 
+/** Submitted text lands inside an HTML email — escape before interpolating. */
+function esc(value: string) {
+    return value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+}
+
 function saveToFile(entry: object) {
     try {
         const dataDir = path.join(process.cwd(), "data");
@@ -56,15 +65,14 @@ export async function POST(req: NextRequest) {
                 subject: `[Portfolio] New message from ${name.trim()}`,
                 text: `Name:    ${name.trim()}\nEmail:   ${email.trim()}\n\nMessage:\n${message.trim()}`,
                 html: `
-                    <div style="font-family:monospace;background:#0a0a0a;color:#e5e5e5;padding:32px;border-radius:8px;border:1px solid #1f1f1f">
-                      <div style="color:#2dd4bf;font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:24px">// Portfolio Secure_Channel — Incoming Transmission</div>
-                      <table style="width:100%;border-collapse:collapse">
-                        <tr><td style="color:#71717a;padding:4px 0;font-size:12px;width:80px">FROM</td><td style="color:#e5e5e5;font-size:13px">${name.trim()} &lt;${email.trim()}&gt;</td></tr>
-                        <tr><td style="color:#71717a;padding:4px 0;font-size:12px">TIME</td><td style="color:#e5e5e5;font-size:13px">${new Date().toISOString()}</td></tr>
+                    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#ffffff;color:#171717;padding:32px;max-width:560px">
+                      <p style="margin:0 0 24px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#737373">New message via gauravtiwari.dev</p>
+                      <table style="width:100%;border-collapse:collapse;font-size:14px">
+                        <tr><td style="color:#737373;padding:6px 0;width:72px">From</td><td style="color:#171717">${esc(name.trim())} &lt;${esc(email.trim())}&gt;</td></tr>
+                        <tr><td style="color:#737373;padding:6px 0">Received</td><td style="color:#171717">${new Date().toISOString()}</td></tr>
                       </table>
-                      <hr style="border:none;border-top:1px solid #1f1f1f;margin:20px 0"/>
-                      <div style="color:#71717a;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">Payload_Message</div>
-                      <div style="color:#d4d4d4;font-size:14px;line-height:1.7;white-space:pre-wrap">${message.trim()}</div>
+                      <hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0"/>
+                      <div style="font-size:15px;line-height:1.7;white-space:pre-wrap">${esc(message.trim())}</div>
                     </div>`,
             });
 

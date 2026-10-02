@@ -1,96 +1,83 @@
 import { NextResponse } from "next/server";
+import { SITE } from "@/data/site";
 
-export const revalidate = 3600; // Cache for 1 hour
+/* ───────────────────────────────────────────────────────────────
+   GitHub — live repository data
+
+   There is no fallback dataset. If the API is unreachable or rate
+   limited this returns `available: false` and the UI renders a link
+   to the profile instead of numbers. Inventing a star count or a
+   language split would make the section a liability, not an asset.
+   ─────────────────────────────────────────────────────────────── */
+
+export const revalidate = 3600;
+
+interface GitHubRepo {
+  name: string;
+  description: string | null;
+  language: string | null;
+  stargazers_count: number;
+  forks_count: number;
+  html_url: string;
+  pushed_at: string;
+  fork: boolean;
+  archived: boolean;
+}
 
 export async function GET() {
-  const username = "gauravtiwarrii";
+  const headers: HeadersInit = { Accept: "application/vnd.github+json" };
+  if (process.env.GITHUB_TOKEN) {
+    headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  }
 
   try {
-    const headers: HeadersInit = {
-      Accept: "application/vnd.github.v3+json",
+    const [userRes, repoRes] = await Promise.all([
+      fetch(`https://api.github.com/users/${SITE.githubHandle}`, {
+        headers,
+        next: { revalidate },
+      }),
+      fetch(
+        `https://api.github.com/users/${SITE.githubHandle}/repos?sort=pushed&per_page=100`,
+        { headers, next: { revalidate } },
+      ),
+    ]);
+
+    if (!userRes.ok || !repoRes.ok) {
+      return NextResponse.json({ available: false });
+    }
+
+    const user = (await userRes.json()) as {
+      public_repos: number;
+      created_at: string;
     };
+    const all = (await repoRes.json()) as GitHubRepo[];
 
-    // Use token if available for higher rate limits
-    if (process.env.GITHUB_TOKEN) {
-      headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
-    }
-
-    const res = await fetch(
-      `https://api.github.com/users/${username}/repos?sort=updated&per_page=30`,
-      { headers, next: { revalidate: 3600 } }
-    );
-
-    if (!res.ok) {
-      throw new Error(`GitHub API error: ${res.status}`);
-    }
-
-    const repos = await res.json();
-
-    // Calculate stats
-    const totalStars = repos.reduce(
-      (sum: number, r: { stargazers_count: number }) => sum + r.stargazers_count,
-      0
-    );
-
-    // Language distribution
-    const langCount: Record<string, number> = {};
-    let totalLangCount = 0;
-    for (const repo of repos) {
-      if (repo.language) {
-        langCount[repo.language] = (langCount[repo.language] || 0) + 1;
-        totalLangCount++;
-      }
-    }
-
-    const languages: Record<string, number> = {};
-    for (const [lang, count] of Object.entries(langCount)) {
-      languages[lang] = Math.round(((count as number) / totalLangCount) * 100);
-    }
-
-    // Sort languages by percentage
-    const sortedLanguages = Object.fromEntries(
-      Object.entries(languages).sort(([, a], [, b]) => b - a)
-    );
+    const owned = all.filter((r) => !r.fork);
+    const languages = [
+      ...new Set(owned.map((r) => r.language).filter(Boolean)),
+    ] as string[];
 
     return NextResponse.json({
-      repos: repos.slice(0, 10).map(
-        (r: {
-          name: string;
-          description: string;
-          language: string;
-          stargazers_count: number;
-          forks_count: number;
-          html_url: string;
-          updated_at: string;
-        }) => ({
-          name: r.name,
-          description: r.description,
-          language: r.language,
-          stargazers_count: r.stargazers_count,
-          forks_count: r.forks_count,
-          html_url: r.html_url,
-          updated_at: r.updated_at,
-        })
-      ),
-      totalStars,
-      totalRepos: repos.length,
-      languages: sortedLanguages,
+      available: true,
+      publicRepos: user.public_repos,
+      totalStars: owned.reduce((sum, r) => sum + r.stargazers_count, 0),
+      /* Distinct primary languages across owned repositories — a count
+         of repositories, never presented as a proficiency split. */
+      languages: languages.slice(0, 8),
+      memberSince: user.created_at,
+      repos: owned.slice(0, 6).map((r) => ({
+        name: r.name,
+        description: r.description,
+        language: r.language,
+        stars: r.stargazers_count,
+        forks: r.forks_count,
+        url: r.html_url,
+        pushedAt: r.pushed_at,
+        archived: r.archived,
+      })),
     });
   } catch (error) {
-    console.error("GitHub API error:", error);
-
-    // Fallback data
-    return NextResponse.json({
-      repos: [],
-      totalStars: 12,
-      totalRepos: 15,
-      languages: {
-        Python: 45,
-        SQL: 25,
-        TypeScript: 15,
-        JavaScript: 10,
-        Shell: 5,
-      },
-    });
+    console.error("GitHub API unreachable:", error);
+    return NextResponse.json({ available: false });
   }
 }

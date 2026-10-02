@@ -83,15 +83,17 @@ export default function ProjectDetails({ params }: PageProps) {
                         </div>
 
                         <div className="flex gap-3">
-                            <a
-                                href={project.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-semibold text-sm hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-                            >
-                                <Github size={16} />
-                                View Code
-                            </a>
+                            {project.github && (
+                                <a
+                                    href={project.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-semibold text-sm hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                                >
+                                    <Github size={16} />
+                                    View Code
+                                </a>
+                            )}
                             {project.demo && (
                                 <a
                                     href={project.demo}
@@ -106,23 +108,15 @@ export default function ProjectDetails({ params }: PageProps) {
                         </div>
                     </motion.div>
 
-                    {/* Right: Status + Impact */}
+                    {/* Right: Data provenance + Impact */}
                     <motion.div className="lg:col-span-1 space-y-4" {...fadeUp(0.2)}>
-                        {project.healthStatus && project.status !== "Archived" && (
-                            <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.07] backdrop-blur-xl flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                    <Activity size={18} className={project.healthStatus.status === "Online" ? "text-emerald-400" : "text-amber-400"} />
-                                    <div>
-                                        <p className="text-sm font-semibold text-zinc-200">System Status</p>
-                                        <p className="text-xs text-zinc-600 font-mono">{project.healthStatus.lastPing}</p>
-                                    </div>
+                        {project.dataNote && (
+                            <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.07] backdrop-blur-xl">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <Activity size={16} className="text-amber-400" />
+                                    <p className="text-sm font-semibold text-zinc-200">Data provenance</p>
                                 </div>
-                                <span className={`text-xs font-mono px-2.5 py-1 rounded-lg ${project.healthStatus.status === "Online"
-                                    ? "bg-emerald-500/15 text-emerald-400"
-                                    : "bg-amber-500/15 text-amber-400"
-                                    }`}>
-                                    {project.healthStatus.status}
-                                </span>
+                                <p className="text-xs text-zinc-500 leading-relaxed">{project.dataNote}</p>
                             </div>
                         )}
 
@@ -194,27 +188,21 @@ export default function ProjectDetails({ params }: PageProps) {
                             </div>
                         </motion.section>
 
-                        {/* Code Snippet */}
-                        {project.codeSnippet && (
+                        {/* Engineering detail */}
+                        {project.highlights.length > 0 && (
                             <motion.section {...fadeUp(0.4)} className="p-8 rounded-2xl bg-white/[0.025] border border-white/[0.07] backdrop-blur-xl">
                                 <h2 className="text-lg font-bold mb-2 text-zinc-100 flex items-center gap-2">
-                                    <span className="text-zinc-600 font-mono text-sm">04.</span> Spotlight Code
+                                    <span className="text-zinc-600 font-mono text-sm">04.</span> Engineering Detail
                                 </h2>
-                                <p className="text-zinc-500 text-sm mb-5">{project.codeSnippet.description}</p>
-                                <div className="rounded-xl overflow-hidden border border-white/[0.07] bg-[#0d1117]">
-                                    <div className="flex items-center justify-between px-5 py-3 bg-white/[0.04] border-b border-white/[0.06]">
-                                        <div className="flex items-center gap-2">
-                                            <Terminal size={14} className="text-zinc-500" />
-                                            <span className="text-xs font-mono text-zinc-400">{project.codeSnippet.fileName}</span>
-                                        </div>
-                                        <span className="text-[10px] text-zinc-600 font-mono uppercase tracking-wider">{project.codeSnippet.language}</span>
-                                    </div>
-                                    <div className="p-5 overflow-x-auto">
-                                        <pre className="font-mono text-sm text-zinc-300 leading-relaxed">
-                                            <code>{project.codeSnippet.code}</code>
-                                        </pre>
-                                    </div>
-                                </div>
+                                <p className="text-zinc-500 text-sm mb-5">The parts of this build that required decisions.</p>
+                                <ul className="space-y-3">
+                                    {project.highlights.map((item, i) => (
+                                        <li key={i} className="flex items-start gap-3 text-sm text-zinc-300">
+                                            <Terminal size={13} className="text-zinc-600 mt-1 shrink-0" />
+                                            <span className="leading-relaxed">{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
                             </motion.section>
                         )}
 
