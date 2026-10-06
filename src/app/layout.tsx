@@ -120,6 +120,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Google AdSense — site verification + Auto ads.
+            Must live in <head> on every page for AdSense review. */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7955473428553830"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className={`${geist.variable} ${mono.variable}`}>
         <ClientLayout>{children}</ClientLayout>
         <Analytics />

@@ -28,10 +28,10 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <SelectedWork />
       <DataPipeline />
-      <Philosophy />
+      <SelectedWork />
       <SkillGalaxy />
+      <Philosophy />
       <About />
       <Timeline />
       <GitHubSection />

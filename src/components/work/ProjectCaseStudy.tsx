@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Github, Info } from "lucide-react";
 import ArchitectureGraph from "@/components/systems/ArchitectureGraph";
-import type { Project } from "@/data/projects";
+import { featuredProjects, type Project } from "@/data/projects";
 
 /* ───────────────────────────────────────────────────────────────
    ProjectCaseStudy
@@ -25,6 +25,7 @@ export default function ProjectCaseStudy({ project, index }: Props) {
   }>;
   const flip = index % 2 === 1;
   const n = String(index + 1).padStart(2, "0");
+  const nextProject = featuredProjects[index + 1];
 
   return (
     <article
@@ -221,6 +222,19 @@ export default function ProjectCaseStudy({ project, index }: Props) {
             <ArrowUpRight size={14} aria-hidden="true" />
             Live
           </a>
+        )}
+        {nextProject && (
+          <Link
+            href={`#project-${nextProject.slug}`}
+            data-cursor="view"
+            className="project-next"
+          >
+            <span className="mono">NEXT SYSTEM / {String(index + 2).padStart(2, "0")}</span>
+            <span className="project-next__title">
+              {nextProject.title}
+              <ArrowUpRight size={14} aria-hidden="true" />
+            </span>
+          </Link>
         )}
       </footer>
     </article>

@@ -9,7 +9,7 @@ export default function Philosophy() {
       aria-labelledby="philosophy-title"
     >
       <div className="shell">
-        <span className="section__index">03 — Method</span>
+        <span className="section__index">04 — Method</span>
 
         <div className="section__body">
           <header className="max-w-[60ch]">

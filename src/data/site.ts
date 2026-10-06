@@ -17,11 +17,13 @@ export const SITE = {
 } as const;
 
 export const NAV_LINKS = [
-  { label: "Work", href: "/#work" },
-  { label: "Systems", href: "/#systems" },
-  { label: "About", href: "/#about" },
-  { label: "Experience", href: "/#experience" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Work", href: "/#work", note: "Selected systems" },
+  { label: "Projects", href: "/projects", note: "Project index" },
+  { label: "Systems", href: "/#systems", note: "Data architecture" },
+  { label: "Journal", href: "/blog", note: "Technical writing" },
+  { label: "About", href: "/#about", note: "Engineer / builder" },
+  { label: "Experience", href: "/#experience", note: "Timeline" },
+  { label: "Contact", href: "/#contact", note: "Direct channels" },
 ] as const;
 
 /* ───────────────────────────────────────────────────────────────

@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import ProjectCaseStudy from "@/components/work/ProjectCaseStudy";
 import { additionalSystems, featuredProjects } from "@/data/projects";
 
@@ -6,7 +7,7 @@ export default function SelectedWork() {
   return (
     <section id="work" className="section" aria-labelledby="work-title">
       <div className="shell">
-        <span className="section__index">01 — Work</span>
+        <span className="section__index">02 — Work</span>
 
         <div className="section__body">
           <header className="max-w-[60ch]">
@@ -18,14 +19,32 @@ export default function SelectedWork() {
             </p>
           </header>
 
-          <div className="mt-16">
-            {featuredProjects.map((project, i) => (
-              <ProjectCaseStudy
-                key={project.slug}
-                project={project}
-                index={i}
-              />
-            ))}
+          <div className="work-layout mt-16">
+            <nav className="work-index" aria-label="Featured project index">
+              <div className="work-index__heading mono">
+                <span>Case files</span>
+                <span>{String(featuredProjects.length).padStart(2, "0")}</span>
+              </div>
+              <ol className="work-index__list">
+                {featuredProjects.map((project, index) => (
+                  <li key={project.slug}>
+                    <a href={`#project-${project.slug}`} data-cursor="view">
+                      <span className="mono">{String(index + 1).padStart(2, "0")}</span>
+                      <span>{project.title}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+              <Link href="/projects" className="work-index__archive">
+                Project archive <ArrowUpRight size={12} aria-hidden="true" />
+              </Link>
+            </nav>
+
+            <div className="work-layout__spreads">
+              {featuredProjects.map((project, i) => (
+                <ProjectCaseStudy key={project.slug} project={project} index={i} />
+              ))}
+            </div>
           </div>
 
           {/* ── Secondary builds ──────────────────────────────── */}

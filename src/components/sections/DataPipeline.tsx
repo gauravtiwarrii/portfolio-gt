@@ -6,7 +6,7 @@ export default function DataPipeline() {
   return (
     <section id="systems" className="section" aria-labelledby="systems-title">
       <div className="shell">
-        <span className="section__index">02 — Systems</span>
+        <span className="section__index">01 — Systems</span>
 
         <div className="section__body">
           <header className="max-w-[60ch]">

@@ -48,38 +48,40 @@ export default function AdminDashboardClient() {
     };
 
     return (
-        <div className="min-h-screen px-6 py-10 max-w-5xl mx-auto">
+        <main className="admin-dashboard">
             {/* Header */}
-            <div className="flex items-center justify-between mb-12">
+            <header className="admin-dashboard__header">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Blog Admin</h1>
-                    <p className="text-zinc-500 mt-1 text-sm">{posts.length} article{posts.length !== 1 ? "s" : ""} published</p>
+                    <p className="eyebrow">GT / CMS / Journal</p>
+                    <h1 className="admin-dashboard__title">Blog admin</h1>
+                    <p className="admin-dashboard__count">{posts.length} article{posts.length !== 1 ? "s" : ""} published</p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="admin-dashboard__actions">
                     <button
                         onClick={fetchPosts}
-                        className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-zinc-400 hover:text-white transition-colors"
+                        className="admin-icon-action"
+                        aria-label="Refresh articles"
                         title="Refresh"
                     >
                         <RefreshCw size={18} />
                     </button>
-                    <Link href="/blog" target="_blank" className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-zinc-400 hover:text-white transition-colors" title="View Blog">
+                    <Link href="/blog" target="_blank" className="admin-icon-action" aria-label="View blog" title="View Blog">
                         <ExternalLink size={18} />
                     </Link>
                     <button
                         onClick={handleLogout}
-                        className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-zinc-400 hover:text-white transition-colors text-sm"
+                        className="admin-action-secondary"
                     >
                         <LogOut size={16} /> Logout
                     </button>
                     <Link
                         href="/admin/new"
-                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-black font-semibold text-sm hover:bg-zinc-100 transition-colors"
+                        className="admin-action-primary"
                     >
                         <Plus size={16} /> New Post
                     </Link>
                 </div>
-            </div>
+            </header>
 
             {/* Posts Table */}
             {loading ? (
@@ -97,45 +99,46 @@ export default function AdminDashboardClient() {
                     </Link>
                 </div>
             ) : (
-                <div className="flex flex-col gap-3">
+                <div className="admin-post-list">
                     {posts.map((post) => (
-                        <div
+                        <article
                             key={post.slug}
-                            className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white/[0.03] border border-white/[0.07] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all"
+                            className="admin-post-row"
                         >
-                            <div className="flex-grow min-w-0">
-                                <h3 className="font-semibold text-zinc-200 truncate mb-2">{post.title}</h3>
-                                <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-500">
+                            <div className="admin-post-row__content">
+                                <h2 className="admin-post-row__title">{post.title}</h2>
+                                <div className="admin-post-row__meta">
                                     <span className="flex items-center gap-1.5">
                                         <Calendar size={12} /> {post.date}
                                     </span>
                                     {post.tags.slice(0, 3).map(tag => (
-                                        <span key={tag} className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-zinc-800/60 text-zinc-400 border border-white/5">
+                                        <span key={tag} className="admin-post-tag">
                                             <Tag size={10} /> {tag}
                                         </span>
                                     ))}
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-2 shrink-0">
+                            <div className="admin-post-row__actions">
                                 <Link
                                     href={`/blog/${post.slug}`}
                                     target="_blank"
-                                    className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-zinc-500 hover:text-white transition-colors"
+                                    className="admin-icon-action"
+                                    aria-label={`Preview ${post.title}`}
                                     title="Preview"
                                 >
                                     <ExternalLink size={16} />
                                 </Link>
                                 <Link
                                     href={`/admin/edit/${post.slug}`}
-                                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-zinc-300 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium"
+                                    className="admin-action-secondary"
                                 >
                                     <PenSquare size={15} /> Edit
                                 </Link>
                                 <button
                                     onClick={() => handleDelete(post.slug)}
                                     disabled={deletingSlug === post.slug}
-                                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-colors text-sm font-medium disabled:opacity-50"
+                                    className="admin-action-danger"
                                     title="Delete"
                                 >
                                     {deletingSlug === post.slug ? (
@@ -146,10 +149,10 @@ export default function AdminDashboardClient() {
                                     Delete
                                 </button>
                             </div>
-                        </div>
+                        </article>
                     ))}
                 </div>
             )}
-        </div>
+        </main>
     );
 }

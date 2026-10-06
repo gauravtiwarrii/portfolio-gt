@@ -109,7 +109,7 @@ export default function Nav() {
           <ul className="hidden items-center gap-1 lg:flex">
             {NAV_LINKS.map((link) => {
               const id = link.href.split("#")[1];
-              const isActive = isHome && active === id;
+              const isActive = id ? isHome && active === id : pathname === link.href;
               return (
                 <li key={link.href}>
                   <Link
@@ -236,12 +236,17 @@ export default function Nav() {
                 <Link
                   href={link.href}
                   onClick={close}
-                  className="flex items-baseline gap-4 py-5 text-2xl font-medium"
+                    className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-5 text-2xl font-medium"
                 >
-                  <span className="mono text-[0.6875rem] text-fg-faint">
-                    {String(i + 1).padStart(2, "0")}
+                  <span className="flex items-baseline gap-4">
+                    <span className="mono text-[0.6875rem] text-fg-faint">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {link.label}
                   </span>
-                  {link.label}
+                  <span className="mono text-[0.5625rem] uppercase tracking-[0.08em] text-fg-faint">
+                    {link.note}
+                  </span>
                 </Link>
               </li>
             ))}

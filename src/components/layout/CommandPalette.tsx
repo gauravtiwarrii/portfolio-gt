@@ -33,7 +33,9 @@ const open = (url: string) => window.open(url, "_blank", "noopener,noreferrer");
 const BASE_ACTIONS: Action[] = [
   { id: "home", label: "Go Home", group: "Navigate", icon: Home, run: (r) => r.push("/") },
   { id: "work", label: "View Work", group: "Navigate", keywords: "projects selected", icon: Layers, run: (r) => r.push("/#work") },
+  { id: "projects", label: "Projects Index", group: "Navigate", keywords: "all projects case studies builds", icon: Layers, run: (r) => r.push("/projects") },
   { id: "systems", label: "Data Systems", group: "Navigate", keywords: "pipeline kafka spark", icon: Layers, run: (r) => r.push("/#systems") },
+  { id: "blog", label: "Blog / Journal", group: "Navigate", keywords: "articles writing posts", icon: FileText, run: (r) => r.push("/blog") },
   { id: "about", label: "About", group: "Navigate", keywords: "education background", icon: User, run: (r) => r.push("/#about") },
   { id: "contact", label: "Contact", group: "Navigate", keywords: "email hire message", icon: Mail, run: (r) => r.push("/#contact") },
   ...RESUMES.filter((resume) => resume.available).map(
@@ -147,6 +149,7 @@ export default function CommandPalette() {
     <div className="fixed inset-0 z-[90] flex items-start justify-center px-4 pt-[12vh]">
       <button
         type="button"
+        tabIndex={-1}
         aria-label="Close command palette"
         onClick={close}
         className="absolute inset-0 cursor-default bg-black/70 backdrop-blur-sm"
@@ -158,7 +161,10 @@ export default function CommandPalette() {
         aria-label="Command palette"
         className="relative w-full max-w-[560px] overflow-hidden rounded-lg border border-line-strong bg-surface shadow-[0_24px_80px_-20px_rgba(0,0,0,0.8)]"
         onKeyDown={(e) => {
-          if (e.key === "Escape") {
+          if (e.key === "Tab") {
+            e.preventDefault();
+            inputRef.current?.focus();
+          } else if (e.key === "Escape") {
             e.preventDefault();
             close();
           } else if (e.key === "ArrowDown") {
@@ -169,13 +175,16 @@ export default function CommandPalette() {
             setIndex((i) =>
               results.length ? (i - 1 + results.length) % results.length : 0
             );
-          } else if (e.key === "Enter") {
-            e.preventDefault();
-            commit();
           }
         }}
       >
-        <div className="flex items-center gap-3 border-b border-line px-4">
+        <form
+          className="flex items-center gap-3 border-b border-line px-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            commit();
+          }}
+        >
           <Search size={15} className="shrink-0 text-fg-faint" aria-hidden="true" />
           <input
             ref={inputRef}
@@ -184,13 +193,35 @@ export default function CommandPalette() {
               setQuery(e.target.value);
               setIndex(0);
             }}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowDown") {
+                e.preventDefault();
+                e.stopPropagation();
+                setIndex((current) => (results.length ? (current + 1) % results.length : 0));
+              } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                e.stopPropagation();
+                setIndex((current) => (results.length ? (current - 1 + results.length) % results.length : 0));
+              } else if (e.key === "Enter") {
+                e.preventDefault();
+                e.stopPropagation();
+                commit();
+              } else if (e.key === "Escape") {
+                e.preventDefault();
+                e.stopPropagation();
+                close();
+              }
+            }}
             placeholder="Search sections, case studies and links"
             aria-label="Search commands"
             aria-controls="palette-results"
             aria-activedescendant={results[index] ? `palette-${results[index].id}` : undefined}
             className="h-14 w-full bg-transparent text-[0.9375rem] outline-none"
           />
-        </div>
+          <button type="submit" className="sr-only" tabIndex={-1} aria-hidden="true">
+            Select highlighted command
+          </button>
+        </form>
 
         <div
           ref={listRef}
