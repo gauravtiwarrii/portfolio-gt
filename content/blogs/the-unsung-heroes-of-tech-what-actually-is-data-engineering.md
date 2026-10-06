@@ -1,9 +1,9 @@
 ---
 title: "The Unsung Heroes of Tech: What Actually is Data Engineering?"
-excerpt: "Here is a summary of your blog post in a single paragraph:  This introductory blog post explores the fundamental role of Data Engineering in the modern tech landscape, comparing data engineers to the essential builders who extract, refine, and transport raw data before it can be used for analytics or machine learning. It breaks down the core ETL (Extract, Transform, Load) process and highlights the essential toolbox required for the job, including programming languages, SQL, Big Data technologies, and cloud platforms. Ultimately, the post emphasizes that while data engineering might not always be the most glamorous part of tech, it is the critical backbone that transforms chaotic, raw data into the reliable, scalable systems that power business intelligence and data science."
+excerpt: "What data engineering actually involves: building the pipelines and platforms that move raw data from source systems into reliable analytics and machine learning."
 date: "2026-03-05"
-readTime: "2 min read"
-tags: ["Data Engineering", "Data Analytics", "ETL", "Big Data", "SQL", "Python", "Machine Learning", "Data Science", "Data Pipelines", "Cloud Computing", "Tech Blog"]
+readTime: "6 min read"
+tags: ["Data Engineering", "ETL", "Pipelines"]
 ---
 
 Welcome to my first blog post! If you’re reading this, you probably keep hearing the phrase "Data is the new oil." It’s a catchy slogan, but it misses a crucial reality: crude oil isn't very useful until it’s extracted, refined, and transported.
@@ -43,6 +43,4 @@ Without data engineers, data scientists would spend 90% of their time just tryin
 Data engineering isn't always the most glamorous part of the tech world, but it is undeniably one of the most critical. It’s about building resilient, scalable systems that turn chaos into clarity.
 
 What's Next?
-This is just the tip of the iceberg! In future posts, I’ll be diving deeper into specific tools, sharing project walkthroughs, and exploring how to build robust data pipelines from scratch.
-
-What’s a data concept you’ve always found confusing and would like me to cover next? Let me know in the comments!
+This is the foundation. A deeper walkthrough of the pipeline lifecycle lives in [How ETL Pipelines Work](/blog/etl-pipelines-work), and the [projects index](/projects) shows these patterns running in real systems I built.

@@ -21,9 +21,17 @@ export const NAV_LINKS = [
   { label: "Projects", href: "/projects", note: "Project index" },
   { label: "Systems", href: "/#systems", note: "Data architecture" },
   { label: "Journal", href: "/blog", note: "Technical writing" },
-  { label: "About", href: "/#about", note: "Engineer / builder" },
+  { label: "About", href: "/about", note: "Engineer / builder" },
   { label: "Experience", href: "/#experience", note: "Timeline" },
-  { label: "Contact", href: "/#contact", note: "Direct channels" },
+  { label: "Contact", href: "/contact", note: "Direct channels" },
+] as const;
+
+/* Footer legal links — required for AdSense trust review. */
+export const LEGAL_LINKS = [
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Use", href: "/terms" },
+  { label: "Cookie Policy", href: "/cookie-policy" },
+  { label: "Disclaimer", href: "/disclaimer" },
 ] as const;
 
 /* ───────────────────────────────────────────────────────────────

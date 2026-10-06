@@ -6,6 +6,7 @@ import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import ScrollProgress from "@/components/layout/ScrollProgress";
 import SystemHud from "@/components/layout/SystemHud";
+import ConsentBanner from "@/components/privacy/ConsentBanner";
 
 /* Interaction extras are desktop-nice-to-haves, not required for reading
    the page — so they load after hydration and never block first paint. */
@@ -36,6 +37,7 @@ export default function ClientLayout({
 
       <Footer />
 
+      <ConsentBanner />
       <CommandPalette />
       <Cursor />
     </>

@@ -1,13 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* /about and /contact used to be standalone pages. Their content now
-     lives in the homepage narrative, so the old URLs redirect to the
-     matching section rather than serving a duplicate of it. */
-  async redirects() {
+  async headers() {
     return [
-      { source: "/about", destination: "/#about", permanent: true },
-      { source: "/contact", destination: "/#contact", permanent: true },
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
     ];
   },
 };

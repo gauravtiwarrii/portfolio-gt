@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NAV_LINKS, RESUMES, SITE } from "@/data/site";
+import { LEGAL_LINKS, NAV_LINKS, RESUMES, SITE } from "@/data/site";
 
 const resumes = RESUMES.filter((resume) => resume.available);
 
@@ -94,10 +94,21 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-line">
-        <div className="shell flex flex-wrap items-center justify-between gap-3 py-5">
+        <div className="shell flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-5">
           <p className="mono text-[0.6875rem] text-fg-faint">
             © 2026 {SITE.name}
           </p>
+          <nav aria-label="Legal" className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            {LEGAL_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="mono text-[0.6875rem] text-fg-faint transition-colors duration-150 hover:text-fg"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
           <p className="mono text-[0.6875rem] text-fg-faint">
             Next.js · TypeScript · Vercel
           </p>

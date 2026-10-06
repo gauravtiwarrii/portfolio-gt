@@ -43,6 +43,8 @@ Create a `.env.local` file in the project root as needed:
 | `GITHUB_TOKEN` | Authenticates GitHub API requests to increase the available rate limit | No |
 | `NEXT_PUBLIC_APP_URL` | Canonical site URL used in site metadata and links | No; defaults to `https://hellogaurav.me` |
 | `NEXT_PUBLIC_BASE_URL` | Base URL used by the admin editor for API requests | No; defaults to `http://localhost:3000` |
+| `NEXT_PUBLIC_ADSENSE_CLIENT` | Google AdSense publisher ID (format `ca-pub-…`); enables the verification script | No; ads stay off until set |
+| `NEXT_PUBLIC_ADSENSE_SLOT_CONTENT` | Ad unit ID for in-content slots on articles/projects; leave empty to show no ads | No |
 
 Example:
 

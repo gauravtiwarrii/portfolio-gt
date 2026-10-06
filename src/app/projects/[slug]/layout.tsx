@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { projects } from "@/data/projects";
 
 type Props = {
@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
         title: `${project.title} | Gaurav Tiwari`,
         description: project.subtitle || project.description,
+        alternates: { canonical: `/projects/${resolvedParams.slug}` },
         openGraph: {
             title: project.title,
             description: project.subtitle || project.description,

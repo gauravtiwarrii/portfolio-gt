@@ -4,6 +4,7 @@ import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import { Analytics } from "@vercel/analytics/react";
 import { SITE } from "@/data/site";
+import { ADSENSE_CLIENT, adsenseEnabled } from "@/lib/adsense";
 
 /* Two families, deliberately: Geist carries display and body, JetBrains Mono
    carries technical metadata. Dropped Inter and Space Grotesk — four font
@@ -118,16 +119,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  /* AdSense verification + Auto ads. Rendered only when a real publisher
+     ID is configured via NEXT_PUBLIC_ADSENSE_CLIENT — never a fake ID.
+     Actual personalised ad slots additionally require visitor consent
+     (see ConsentBanner) and are placed only on content-rich pages. */
+  const adsense = adsenseEnabled();
   return (
     <html lang="en">
       <head>
-        {/* Google AdSense — site verification + Auto ads.
-            Must live in <head> on every page for AdSense review. */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7955473428553830"
-          crossOrigin="anonymous"
-        />
+        {adsense && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+            crossOrigin="anonymous"
+          />
+        )}
       </head>
       <body className={`${geist.variable} ${mono.variable}`}>
         <ClientLayout>{children}</ClientLayout>
