@@ -7,7 +7,7 @@ export const SITE = {
   name: "Gaurav Tiwari",
   monogram: "GT",
   role: "Software Engineer · Data Engineer · AI Systems Builder",
-  url: process.env.NEXT_PUBLIC_APP_URL || "https://gauravtiwari.dev",
+  url: process.env.NEXT_PUBLIC_APP_URL || "https://hellogaurav.me",
   email: "igauravtiwari1096@gmail.com",
   github: "https://github.com/gauravtiwarrii",
   githubHandle: "gauravtiwarrii",

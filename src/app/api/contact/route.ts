@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
                 text: `Name:    ${name.trim()}\nEmail:   ${email.trim()}\n\nMessage:\n${message.trim()}`,
                 html: `
                     <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#ffffff;color:#171717;padding:32px;max-width:560px">
-                      <p style="margin:0 0 24px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#737373">New message via gauravtiwari.dev</p>
+                      <p style="margin:0 0 24px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#737373">New message via hellogaurav.me</p>
                       <table style="width:100%;border-collapse:collapse;font-size:14px">
                         <tr><td style="color:#737373;padding:6px 0;width:72px">From</td><td style="color:#171717">${esc(name.trim())} &lt;${esc(email.trim())}&gt;</td></tr>
                         <tr><td style="color:#737373;padding:6px 0">Received</td><td style="color:#171717">${new Date().toISOString()}</td></tr>

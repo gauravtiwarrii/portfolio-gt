@@ -41,7 +41,7 @@ Create a `.env.local` file in the project root as needed:
 | `ADMIN_PASSWORD` | Password for the admin login | Only for admin access |
 | `RESEND_API_KEY` | Sends contact form submissions by email; without it, submissions are saved locally in development | No |
 | `GITHUB_TOKEN` | Authenticates GitHub API requests to increase the available rate limit | No |
-| `NEXT_PUBLIC_APP_URL` | Canonical site URL used in site metadata and links | No; defaults to `https://gauravtiwari.dev` |
+| `NEXT_PUBLIC_APP_URL` | Canonical site URL used in site metadata and links | No; defaults to `https://hellogaurav.me` |
 | `NEXT_PUBLIC_BASE_URL` | Base URL used by the admin editor for API requests | No; defaults to `http://localhost:3000` |
 
 Example:

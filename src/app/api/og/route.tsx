@@ -72,7 +72,7 @@ export async function GET(req: NextRequest) {
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <span style={{ color: "#b0b3a7", fontSize: 18 }}>Software · Data · AI</span>
-            <span style={{ color: "#85897c", fontSize: 15 }}>gauravtiwari.dev</span>
+            <span style={{ color: "#85897c", fontSize: 15 }}>hellogaurav.me</span>
           </div>
         </div>
       ),
